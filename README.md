@@ -4,6 +4,8 @@
 
 ### 1.1 - Desarrollo
 
+
+
 Desarrollar un backend utilizando una API REST o GraphQL y un frontend parcial con las siguientes caracterísitcas:
 
   * El backend debe ser programado en JavaScript con NodeJS.
