@@ -4,7 +4,7 @@ import * as usercontroller from '../Controllers/user.controller';
 const router = Router();
 
 //Get All user
-router.get('/',[authjwt.verifyToken, authjwt.isAdmin],usercontroller.getUser);
+router.get('/',usercontroller.getUser);
 
 //Get by id
 router.get('/:id', usercontroller.getUserById);

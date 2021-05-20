@@ -1,13 +1,16 @@
 "use strict";
 
-var mysql = require('mysql');
+var _mysql = _interopRequireDefault(require("mysql"));
 
-var mysqlconnection = mysql.createConnection({
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var mysqlconnection = _mysql["default"].createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
   database: 'kayak'
 });
+
 mysqlconnection.connect(function (err) {
   if (err) {
     console.log(err);

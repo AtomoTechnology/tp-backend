@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import mysqlconnection from '../DB/db'; 
 export const signin = (req, res) =>{    
     const { userName, userPass} = req.body;
-    mysqlconnection.query('SELECT * FROM login where userName =? and state =?',[userName, 1],(err, rows, fields) =>{
+    mysqlconnection.query('SELECT *, rol.name as role FROM accounts acc inner join roles rol on acc.idRole = rol.id where userName =? and acc.state =?',[userName, 1],(err, rows, fields) =>{
         if(!err){
             const userfound = rows[0];
             if(!userfound)
@@ -25,7 +25,7 @@ export const signin = (req, res) =>{
                     });
                 }
                 else{ 
-                    const token = jwt.sign({id:userfound.id},config.SECRET,{
+                    const token = jwt.sign({idaccount:userfound.id, role:userfound.role, iduser:userfound.idUser},config.SECRET,{
                         expiresIn:86400 // vence en un dia
                     });
                     return res.status(200).json({token});

@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="abs-center">
+    <form id="formulario" [formGroup]="accountForm"  class="form border p-3 form" (ngSubmit)="OnSubmit()">
+      <h2 class="text-center">Cuenta</h2>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text"  name="userName" id="userName" class="form-control email-login" formControlName="userName"
+        [class]="isValidField('userName')">
+        <div class="invalid-feedback">
+          <span *ngIf="accountForm.get('userName').errors?.required">
+              this field is rquired
+          </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" name="userPass" id="userPass" class="form-control password-login"
+        formControlName="userPass" [class]="isValidField('userPass')">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+      </div>
+      <div class="clearfix">
+        <label class="pull-right"><input type="checkbox">Recuerda</label>
+        <a href="#" class="col-md-offset-2" style="float: right;">¿Olvidar contraseña?</a>
+      </div>
+    </form>
+  </div>
+</div>
+
