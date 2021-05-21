@@ -1,0 +1,11 @@
+ul li {
+    font-size: 28px;
+    line-height: 20px;
+    font-family: 'Lato', 'sans-serif';
+    position: relative;
+}
+ul li a {
+    padding: 0;
+    font-weight: 400;
+    color: #000;
+}
