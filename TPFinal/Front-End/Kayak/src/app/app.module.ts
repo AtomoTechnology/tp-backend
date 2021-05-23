@@ -12,6 +12,8 @@ import { HeaderComponent } from './components/menu/header/header.component';
 import { NavbarComponent } from './components/menu/navbar/navbar.component';
 import { FooterComponent } from './components/menu/footer/footer.component';
 import { PrincipalComponent } from './components/principal/principal/principal.component';
+import { UserComponent } from './components/user/user.component';
+import { ContentprincipalComponent } from './components/menu/contentprincipal/contentprincipal.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { PrincipalComponent } from './components/principal/principal/principal.c
     HeaderComponent,
     NavbarComponent,
     FooterComponent,
-    PrincipalComponent
+    PrincipalComponent,
+    UserComponent,
+    ContentprincipalComponent
   ],
   imports: [
     BrowserModule,FormsModule,ReactiveFormsModule,

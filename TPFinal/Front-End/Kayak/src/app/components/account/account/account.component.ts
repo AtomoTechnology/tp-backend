@@ -13,7 +13,9 @@ import { TaskService } from 'src/app/services/auth/task.service';
 export class AccountComponent implements OnInit {
   accountForm: FormGroup;
   constructor( private userService: TaskService,
-    private router: Router, private fb:FormBuilder) { }
+    private router: Router, private fb:FormBuilder) {
+      this.initForm();
+     }
 
   ngOnInit(): void {
     this.initForm();
@@ -38,13 +40,12 @@ export class AccountComponent implements OnInit {
           if (success) {
           let decodotken = decode(this.userService.getJwtToken());
            let role = decodotken['role'];
-            if (this.userService.loggedIn() && role === 'admin'.toLowerCase()) {
-              this.router.navigate(['/Principal']);
-            } else if (
-              this.userService.loggedIn() && role === 'jefe carrera'.toLowerCase()) {
-              this.router.navigate(['/jefecarrera']);
-            } else if (this.userService.loggedIn() && role === 'postulante'.toLowerCase()) {
-              this.router.navigate(['/postulante']);
+            if (this.userService.loggedIn() && role === ('admin').toLowerCase()) {
+              this.router.navigate(['/Browse']);
+            } else if (this.userService.loggedIn() && role === ('socio').toLowerCase()) {
+              this.router.navigate(['/socio']);
+            } else if (this.userService.loggedIn() && role === ('employee').toLowerCase()) {
+              this.router.navigate(['/employee']);
             } else {
               this.router.navigate(['/error']);
             }
