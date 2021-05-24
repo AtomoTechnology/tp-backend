@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TaskService } from 'src/app/services/auth/task.service';
-
 @Component({
   selector: 'app-contentprincipal',
   templateUrl: './contentprincipal.component.html',
@@ -11,7 +10,8 @@ export class ContentprincipalComponent implements OnInit {
 
   constructor(
     private task: TaskService,
-    private router: Router) { }
+    private router: Router) {
+     }
 
   ngOnInit(): void {
   }

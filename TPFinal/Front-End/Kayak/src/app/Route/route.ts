@@ -1,9 +1,7 @@
 import { Routes } from "@angular/router";
 import { AccountComponent } from "../components/account/account/account.component";
 import { ContentprincipalComponent } from "../components/menu/contentprincipal/contentprincipal.component";
-import { UserComponent } from "../components/user/user.component";
-import { AuthGuard } from "../guard/auth.guard";
-import { RoleGuardGuard } from "../guard/role-guard.guard";
+import { PrincipalComponent } from "../components/principal/principal/principal.component";
 
 export const appRoutes: Routes = [
   {
@@ -12,23 +10,26 @@ export const appRoutes: Routes = [
      data: {title: 'Home'}
   },
   {
+    path: 'Home',
+    component: PrincipalComponent,
+     data: {title: 'Acceder al sistema'}
+  },
+  {
     path: 'Account',
     component: AccountComponent,
      data: {title: 'Acceder al sistema'}
   },
   {
     path: 'User',
-    component: UserComponent,
-    canLoad: [AuthGuard],
-    canActivate: [RoleGuardGuard],
-     data: {
-      expectedRole: 'admin',
-      title: 'Acción usuario'
-    }
+    loadChildren:() => import("../modules/user/user.module").then((p) => p.UserModule)
+  },
+  {
+    path: 'ActionKayak',
+    loadChildren:() => import("../modules/kayakaction/kayakaction.module").then((p) => p.KayakactionModule)
   },
   {
     path: '',
-    redirectTo: `/Home`,
+    redirectTo: '/Home',
     pathMatch: 'full',
   }
 ];
