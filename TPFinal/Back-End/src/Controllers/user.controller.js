@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import * as encripto from '../Helpers/Cryptographies'
 import mysqlconnection from '../DB/db'; 
 export const getUser = (req, res) =>{

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -9,10 +9,13 @@ export class NavbarComponent implements OnInit {
   visible: boolean = true;
   @Output() menu: EventEmitter<any> = new EventEmitter();
   @Output() Logout: EventEmitter<any> = new EventEmitter();
+  @Input() menunav:any;
 
   constructor() { }
 
   ngOnInit(): void {
+    debugger;
+    let p = this.menunav;
   }
   LogoutEmitter(){
     this.Logout.emit(true);

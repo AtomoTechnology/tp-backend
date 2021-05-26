@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import '../DB/db';
 import userRoute from '../Route/user.route';
 import authRoute from '../Route/auth.router';
+import locationRoute from '../Route/location.router';
 import pkg from '../../package.json';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -33,11 +34,12 @@ var corsOptions = {
     optionsSuccessStatus: 200 // For legacy browser support
 }
 app.use(cors(corsOptions));
-  app.use(helmet());
+app.use(helmet());
 app.use(express.json());
 //Routes
 app.use('/api/users', userRoute);
 app.use('/api/auth', authRoute);
+app.use('/api/locations', locationRoute);
 //Starting
 app.listen(app.get('port'), () =>{
     console.log('server on port',app.get('port'));

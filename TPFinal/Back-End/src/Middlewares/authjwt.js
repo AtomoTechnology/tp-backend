@@ -16,6 +16,7 @@ export const verifyToken = async(req, res, next) =>{
         const decode = jwt.verify(token, config.SECRET);
 
         req.id = decode.id;
+        req.role = decode.role;
         const userExist =  mysqlconnection.query('SELECT * FROM users where state = 1 and id =?',[req.id]); 
         if(!userExist){
             return res.status(404).json({
@@ -34,18 +35,33 @@ export const verifyToken = async(req, res, next) =>{
 };
 
 export const isAdmin = async(req, res, next) => {
-    try {        
-        const userExist =  mysqlconnection.query('SELECT * FROM roles rol where state = 1 and .id =?',[req.body.idRole]); 
-        if(userExist.name.toLowerCase() === ("admin").toLowerCase()){
-            next();
-            return;
-        }
-        else{
-            return res.status(403).json({
-                error:"error",
-                message:"Requiere acceso administrativo"
-            });  
-        }
+    try 
+    { 
+        mysqlconnection.query('SELECT * FROM roles where state = 1 and name =?',[req.role], (err, rows, fields) =>
+        {
+            if(!err)
+            {
+                if(rows[0].name.toLowerCase() === ("admin").toLowerCase())
+                {
+                    next();
+                    return;
+                }
+                else
+                {
+                    return res.status(403).json({
+                        error:"error",
+                        message:"Requiere acceso administrativo"
+                    });  
+                }
+            }
+            else{
+                return res.status(403).json({
+                    error:"error",
+                    message:"Requiere acceso administrativo"
+                });
+            }
+        });      
+        
     } 
     catch (error) {
         return res.status(403).json({

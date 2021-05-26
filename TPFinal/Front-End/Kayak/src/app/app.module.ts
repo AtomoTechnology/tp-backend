@@ -31,6 +31,7 @@ import { ActionparcheComponent } from './components/parche/actionparche/actionpa
 
 // Module
 import { UserModule } from './modules/user/user.module';
+import { PartnerComponent } from './components/partner/partner.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +45,8 @@ import { UserModule } from './modules/user/user.module';
     ActionuserComponent,
     KayakactionComponent,
     ParcheComponent,
-    ActionparcheComponent
+    ActionparcheComponent,
+    PartnerComponent
   ],
   imports: [
     BrowserModule,FormsModule,ReactiveFormsModule,

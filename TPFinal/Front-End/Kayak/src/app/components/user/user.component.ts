@@ -12,6 +12,7 @@ import Swal from 'sweetalert2'
 })
 export class UserComponent implements OnInit {
   userlist :Array<User> = [];
+  menunav:any
   constructor(
     private task: TaskService,
     private router: Router,private userService: UserService) {
@@ -19,6 +20,28 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.GetAll();
+    this.menunav=[
+      {
+        url:"/ActionKayak",
+        displayName:"Crear kayak",
+        active:""
+      },
+      {
+        url:"/User",
+        displayName:"Crear usuario",
+        active:"active"
+      },
+      {
+        url:"/Hanger",
+        displayName:" Crear parches",
+        active:""
+      },
+      {
+        url:"/Partner",
+        displayName:"Crear socio",
+        active:""
+      }
+    ]
   }
   GetAll(){
     debugger;
