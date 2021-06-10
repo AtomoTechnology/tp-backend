@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TaskService } from '../../../services/auth/task.service';
 
 @Component({
   selector: 'app-principal',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrincipalComponent implements OnInit {
 
-  constructor() { }
+  constructor(private task: TaskService) { }
 
   ngOnInit(): void {
+    this.task.doLogoutUser();
 
   }
 

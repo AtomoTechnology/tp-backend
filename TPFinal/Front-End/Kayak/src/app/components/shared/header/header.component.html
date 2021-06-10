@@ -1,0 +1,31 @@
+<!--Navbar -->
+<nav class="navbar sticky-top  mb-3 navbar navbar-expand-xl navbar-dark bg-dark">
+    <a class="navbar-brand" routerLink="/Browse">Kayak</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
+      aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item {{perfil.active}} actionmenu"  *ngFor="let perfil of menunav">
+          <a class="nav-link"  routerLink={{perfil.url}}>
+            {{perfil.displayName}}
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown"  style="cursor: pointer;">
+          <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user"></i>Mi perfil </a>
+          <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+            <a class="dropdown-item" href="#">Mi cuenta</a>
+            <a class="dropdown-item" (click)="LogoutEmitter()" style="cursor: pointer;">Cerrar sesion</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!--/.Navbar -->
+  
+  
+  

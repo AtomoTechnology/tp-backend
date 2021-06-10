@@ -43,7 +43,7 @@ export class ContentprincipalComponent implements OnInit {
     if(islogout){
       let val = this.task.Logout();
       if(val){
-        this.router.navigate(['/Account']);
+        this.router.navigate(['/Home']);
       }
     }
   }

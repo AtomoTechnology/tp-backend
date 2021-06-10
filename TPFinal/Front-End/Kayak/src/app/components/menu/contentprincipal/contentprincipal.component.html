@@ -1,7 +1,13 @@
-<app-navbar (Logout)="Logout($event)" [menunav]="menunav">
-</app-navbar>
+<app-header (Logout)="Logout($event)" [menunav]="menunav"></app-header>
+<div flexLayout="row">
+    <div class="content">
+        <router-outlet>
 
-<div class="row m-0 row-cols-1 row-cols-md-5">
+        </router-outlet>
+    </div>
+</div>
+<!-- <app-footer flexLayout="column"></app-footer> -->
+<!-- <div class="row m-0 row-cols-1 row-cols-md-5">
   <div class="col mb-3">
     <a href="">
       <div class="card h-100">
@@ -62,5 +68,5 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 

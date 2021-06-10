@@ -19,7 +19,8 @@ export class UserComponent implements OnInit {
      }
 
   ngOnInit(): void {
-    this.GetAll();
+  
+    debugger;
     this.menunav=[
       {
         url:"/ActionKayak",
@@ -42,6 +43,7 @@ export class UserComponent implements OnInit {
         active:""
       }
     ]
+    this.GetAll();
   }
   GetAll(){
     debugger;
