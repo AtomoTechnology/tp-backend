@@ -10,10 +10,11 @@ router.get('/',usercontroller.getUser);
 router.get('/:id', usercontroller.getUserById);
 
 //Create
-router.post('/',[validator.checkUserNameNoneRepeat,validator.checkRoleExisted],usercontroller.createUser);
+// ,validator.isUserValid,validator.isPassValid, validator.IsmailValid
+router.post('/',[authjwt.verifyToken,validator.checkUserNameNoneRepeat,validator.checkRoleExisted],usercontroller.createUser);
 
 //Update
-router.put('/:id',[authjwt.verifyToken, authjwt.isAdmin,validator.checkRoleExisted], usercontroller.updateUser);
+router.put('/:id',[authjwt.verifyToken, authjwt.isAdmin,validator.checkRoleExisted, validator.IsmailValid], usercontroller.updateUser);
 
 //Delete
 router.delete('/:id',[authjwt.verifyToken, authjwt.isAdmin], usercontroller.deleteUser);

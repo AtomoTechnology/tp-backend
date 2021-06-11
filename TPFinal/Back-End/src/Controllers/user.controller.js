@@ -6,7 +6,7 @@ export const getUser = (req, res) =>{
             res.json(rows);
         }
         else{
-            console.log(err);
+            res.json(err);
         }
     });    
 }
@@ -17,18 +17,18 @@ export const getUserById = (req, res) =>{
             res.json(rows[0]);
         }
         else{
-            console.log(err);
+            res.json(err);
         }
     });    
 }
 export const createUser = (req, res) =>{
-    const { id, firstName, lastName, address, phone, userName, userPass, idRole } = req.body;
+    const { id, firstName, lastName, address, phone, userName, userPass, idRole,idDocumentType,mail,docNumber } = req.body;
     const query = `
-    CALL CreateOrUpdateUser(?, ?, ?, ?, ?, ?, ?, ?);
+    CALL CreateOrUpdateUser(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     `
     const pass = ""; 
     encripto.encryptPassword(userPass).then(val =>{
-        mysqlconnection.query(query,[id, firstName, lastName, address, phone, idRole, userName, val], (err, rows, fields) =>{
+        mysqlconnection.query(query,[id, firstName, lastName, address, phone, idRole, userName, val,idDocumentType,mail,docNumber], (err, rows, fields) =>{
             if(!err){          
                 return res.json({
                     status: 201,
@@ -36,19 +36,19 @@ export const createUser = (req, res) =>{
                 });
             }
             else{
-                console.log(err);
+                res.json(err);
             }
         });
     });
    
 }
 export const updateUser = (req, res) =>{
-    const { firstName, lastName, address, phone } = req.body;
+    const { firstName, lastName, address, phone,idDocumentType,mail,docNumber } = req.body;
     const { id } = req.params;
     const query = `
-    CALL CreateOrUpdateUser(?, ?, ?, ?, ?);
+    CALL CreateOrUpdateUser(?, ?, ?, ?, ?, ?, ?, ?);
     `
-    mysqlconnection.query(query,[id, firstName, lastName, address, phone], (err, rows, fields) =>{
+    mysqlconnection.query(query,[id, firstName, lastName, address, phone,idDocumentType,mail,docNumber], (err, rows, fields) =>{
         if(!err){
             res.json({
                 status: 201,
@@ -56,7 +56,7 @@ export const updateUser = (req, res) =>{
             });
         }
         else{
-            console.log(err);
+            res.json(err);
         }
     });
 }
@@ -70,7 +70,7 @@ export const deleteUser = (req, res) =>{
             });
         }
         else{
-            console.log(err);
+            res.json(err);
         }
     });
 }

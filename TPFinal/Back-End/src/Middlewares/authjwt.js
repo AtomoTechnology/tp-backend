@@ -17,6 +17,8 @@ export const verifyToken = async(req, res, next) =>{
 
         req.id = decode.id;
         req.role = decode.role;
+        req.idRole = decode.idRole;
+        
         const userExist =  mysqlconnection.query('SELECT * FROM users where state = 1 and id =?',[req.id]); 
         if(!userExist){
             return res.status(404).json({

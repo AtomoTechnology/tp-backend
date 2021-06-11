@@ -10,10 +10,14 @@ import { PartnerComponent } from 'src/app/components/partner/partner.component';
 import { ActionuserComponent } from 'src/app/components/user/actionuser/actionuser.component';
 import { UserComponent } from 'src/app/components/user/user.component';
 import { SharedModule } from 'src/app/components/shared/shared.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TooltipModule } from 'primeng/tooltip';
 import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import {ReactiveFormsModule} from '@angular/forms';
+import { FormsModule} from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -28,9 +32,14 @@ import { TableModule } from 'primeng/table';
   ],
   imports: [
     CommonModule,
-    ContentprincipalRoutingModule,
-    SharedModule,TableModule,AccordionModule,ButtonModule,
-    // BrowserAnimationsModule
+    ContentprincipalRoutingModule,ReactiveFormsModule,FormsModule,
+    SharedModule,TableModule,AccordionModule,ButtonModule,ToastrModule.forRoot({
+      progressBar: true,
+      timeOut: 5000,
+      enableHtml: true,
+      preventDuplicates: true,
+      progressAnimation:'increasing'
+    }),TooltipModule,BrowserAnimationsModule
 
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]

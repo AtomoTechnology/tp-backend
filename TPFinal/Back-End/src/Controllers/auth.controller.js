@@ -3,6 +3,7 @@ import * as encripto from '../Helpers/Cryptographies';
 import config from '../config/config';
 import jwt from 'jsonwebtoken';
 import mysqlconnection from '../DB/db'; 
+
 export const signin = (req, res) =>{    
     const { userName, userPass} = req.body;
     mysqlconnection.query('SELECT *, rol.name as role FROM accounts acc inner join roles rol on acc.idRole = rol.id where userName =? and acc.state =?',[userName, 1],(err, rows, fields) =>{
@@ -25,9 +26,17 @@ export const signin = (req, res) =>{
                     });
                 }
                 else{ 
-                    const token = jwt.sign({idaccount:userfound.id, role:userfound.role, iduser:userfound.idUser},config.SECRET,{
-                        expiresIn:86400 // vence en un dia
-                    });
+                    const token = jwt.sign(
+                        {
+                            idaccount:userfound.id, 
+                            role:userfound.role, 
+                            idRole:userfound.idRole, 
+                            iduser:userfound.idUser
+                        },
+                        config.SECRET,{
+                            expiresIn:86400 // vence en un dia
+                        }
+                    );
                     return res.status(200).json({token});
                 }            
             }
@@ -39,4 +48,34 @@ export const signin = (req, res) =>{
             });
         }
     });    
+}
+
+export const GetById = (req, res) =>{    
+    const { id } = req.params;
+    mysqlconnection.query('SELECT * FROM accounts where state = 1 and id =?',[id], (err, rows, fields) =>{
+        if(!err){
+            res.json(rows[0]);
+        }
+        else{
+            res.json(err);
+        }
+    });    
+}
+
+export const Put = (req, res) =>{
+    const { idUser, userPass } = req.body;
+    const { id } = req.params; 
+    encripto.encryptPassword(userPass).then(val =>{  
+        mysqlconnection.query(`UPDATE accounts SET userPass = '${val}' WHERE id =${[id]}`, (err, rows, fields) =>{
+            if(!err){
+                res.json({
+                    status: 201,
+                    message:'La contraeña ha sido modificada con exito'
+                });
+            }
+            else{
+                return res.json(err);
+            }
+        });
+    });
 }

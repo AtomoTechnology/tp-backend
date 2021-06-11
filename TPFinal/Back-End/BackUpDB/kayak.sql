@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-05-2021 a las 16:47:30
--- Versión del servidor: 10.4.18-MariaDB
--- Versión de PHP: 8.0.3
+-- Tiempo de generación: 11-06-2021 a las 03:14:08
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 8.0.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,12 +32,12 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateOrUpdate` (IN `_id` BIGINT(20
     	UPDATE users SET address = _address, firstName = _firstName, lastName = _lastName WHERE id = _id;
     END IF$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateOrUpdateUser` (IN `_id` INT(20), IN `_firstName` VARCHAR(200), IN `_lastName` VARCHAR(100), IN `_address` VARCHAR(250), IN `_phone` VARCHAR(15), IN `_idRole` BIGINT(20), IN `_userName` VARCHAR(100), IN `_userPass` VARCHAR(100))  IF  _id = 0 THEN
-    	INSERT INTO users (address, creationDate, firstName, lastName, phone, state) VALUES(_address, CURDATE(),  _firstName, _lastName, _phone, 1);
+CREATE DEFINER=`root`@`localhost` PROCEDURE `CreateOrUpdateUser` (IN `_id` BIGINT(20), IN `_firstName` VARCHAR(200), IN `_lastName` VARCHAR(100), IN `_address` VARCHAR(250), IN `_phone` VARCHAR(15), IN `_idRole` BIGINT(20), IN `_userName` VARCHAR(100), IN `_userPass` VARCHAR(100), IN `_idDocumentType` BIGINT, IN `_mail` INT(100), IN `_docNumber` INT(30))  IF  _id = 0 THEN
+    	INSERT INTO users (idDocumentType,address, creationDate, firstName, lastName,docNumber,mail, phone, state) VALUES(_idDocumentType,_address, CURDATE(),  _firstName, _lastName,_docNumber,_mail, _phone, 1);
         SET @_idUser = last_insert_id();
         INSERT INTO accounts(idUser, idRole, userName, userPass, state) VALUES(@_idUser, _idRole, _userName, _userPass, 1);
     ELSE 
-    	UPDATE users SET address = _address, firstName = _firstName, lastName = _lastName, phone = _phone  WHERE id = _id;
+    	UPDATE users SET address = _address, firstName = _firstName, lastName = _lastName,docNumber = _docNumber,mail =_mail, phone = _phone, idDocumentType= _idDocumentType  WHERE id = _id;
 END IF$$
 
 DELIMITER ;
@@ -62,11 +62,43 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`id`, `idUser`, `idRole`, `userName`, `userPass`, `state`) VALUES
-(8, 23, 1, 'prade516', '$2a$10$lTKCaq4TKTY8zJ/Vun9fqe0v1h1XdomTXYgT7TV0lvKo/tPlh5Oxi', 1),
-(11, 26, 2, 'Jere', '$2a$10$nig7w60MGA5EbyD8N/hzsuj78l9yJDYho7tfqCqlahcYbUqT/vG6y', 1),
 (15, 30, 1, 'Jereq', '$2a$10$jTqkeCa2A1R.89tbAh5d2uwbyOASIX0lOq/Dt40AANmUfGrkb4vFe', 1),
-(16, 31, 2, 'Jereqr', '$2a$10$Dua9u.9hdnnnohYvyuD7iOchNqIj/.SNusaOQs1q/Wt8h1JZ2rkbG', 1),
-(17, 32, 2, 'prade', '$2a$10$8al1KitPpxtrgl28phG7ZemW6dXkFy4y1Hc66B2fL5X3HB0VHEahe', 1);
+(18, 33, 1, 'Jereq1', '$2a$10$Z4Qv6ayfMvXdqh.PuhaT0e4Kwk6nGJ3L1mv4Qgx.k27mF5HmpNh1.', 1),
+(19, 34, 2, 'Jereq3', '$2a$10$Y5QbCWH5rz9eydCEnp35v.p7I2oOszoqI0AKVIUOO89BsR3.2jKDq', 1),
+(20, 35, 2, 'Jereq32', '$2a$10$ZoHRELlc3kg11NhpRYL.eeZnRK6KPzCnA91e9lYRZXnQd/nO1LWSa', 1),
+(21, 36, 2, 'Jereq3h2', '$2a$10$XI0YeDCAJ1qR6QgRYPnJtuaKvNG2gPc7cJpybSamDUrmWkN9Kv8FK', 1),
+(22, 37, 2, 'Jereq9', '$2a$10$QYohPOaRVqdepBKslhTmHOw5RCNXIucqKvO6cjzip.EEId/a/yLwK', 1),
+(23, 38, 1, 'Jereq6', '$2a$10$oiLSXFs5SwlQZFSK.XlOzuFrluWBUmYPoC0XhV/4Eh/mkVRzz/RSG', 1),
+(24, 39, 1, 'Jereqd', '$2a$10$yR1i/P3AEF7GMgHYrvbfDOElgBZkB/tjBrcIdsYBsBQ6ANMbx6t3y', 1),
+(25, 40, 1, 'Jereqe', '$2a$10$Q2Ra8QjW2q189O4w1wQz/.IrQDUAfbQHG84YBJkWhqr9neNEVrp2y', 1),
+(26, 41, 1, 'Jereq8', '$2a$10$Gfi5ukBd8OOZTPtUl0UzXuW1t3U9IwU.UFNmY6W5ekA1qoaITswrq', 1),
+(27, 42, 1, 'Jereqr', '$2a$10$ek4v0C7VQhRfYuJtNIXJeeVKxWaTGyybTykjcCLaxIrHNvsfjq.DK', 1),
+(28, 43, 1, 'Jereqdt', '$2a$10$Hnc0iaSB98QOd7iQ9nGPCeLzzwSNmaX6G.rq2ozJAPvrsWF9SgA1q', 1),
+(29, 44, 1, 'Jereqfdg', '$2a$10$zZHAaJcYf2e2XYUSHviXJeyhDBBNFNQD7Rx4ad4tWqUHU49ezQ5Fe', 1),
+(30, 45, 1, 'Jereqerwer', '$2a$10$wvdfmpD23hCSLemsY1MifeU73f9IR1IZ7d/VZdRVSMiUth7r8fRkm', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `documenttypes`
+--
+
+CREATE TABLE `documenttypes` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` varchar(250) NOT NULL,
+  `state` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `documenttypes`
+--
+
+INSERT INTO `documenttypes` (`id`, `name`, `description`, `state`) VALUES
+(1, 'DNI', 'El DNI contiene información sobre su identidad. Pero, lo más importante es que este documento tiene un número personal. El número del DNI es necesario para cualquier contrato.', 1),
+(2, 'PASAPORTE', 'PASAPORTE', 1),
+(3, 'L.C', 'Libreta Cívica', 1),
+(4, 'L.E.', 'Libreta de Enrolamiento', 1);
 
 -- --------------------------------------------------------
 
@@ -202,46 +234,31 @@ CREATE TABLE `users` (
   `creationDate` datetime NOT NULL DEFAULT current_timestamp(),
   `address` varchar(250) NOT NULL,
   `phone` varchar(15) NOT NULL,
-  `state` int(11) NOT NULL
+  `state` int(11) NOT NULL,
+  `idDocumentType` bigint(20) NOT NULL,
+  `docNumber` varchar(20) NOT NULL,
+  `mail` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `firstName`, `lastName`, `creationDate`, `address`, `phone`, `state`) VALUES
-(1, 'Juana Camilla Jere', 'Gonano', '2021-04-24 19:14:05', 'Ov Largos', '341546', 1),
-(2, 'Jere', 'Eugene', '2021-04-24 19:53:53', 'Ov Largos', '3415555', 1),
-(3, 'Itati', 'Gonano', '2021-04-24 00:00:00', 'Ov Largos', '341546', 1),
-(4, 'Juana Camilla', 'Gonano', '2021-04-24 00:00:00', 'Ov Largos', '341546', 2),
-(5, 'Juana Camilla Jere', 'Gonano', '2021-04-24 00:00:00', 'Ov Largos', '341546', 1),
-(6, 'Juana Camilla Jere', 'Gonano', '2021-04-24 00:00:00', 'Ov Largos', '341546', 1),
-(7, 'Juana Camilla Jere', 'Gonano', '2021-04-24 00:00:00', 'Ov Largos', '341546', 1),
-(8, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(9, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(10, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(11, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(12, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(13, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(14, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(15, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(16, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(17, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(18, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(19, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(20, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(21, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(22, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(23, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(24, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(25, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(26, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(27, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(28, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(29, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(30, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1),
-(31, 'con controlador', 'babel', '2021-05-19 00:00:00', 'Ov Largos', '341546', 1),
-(32, 'con controlador', 'babel', '2021-05-19 00:00:00', 'Ov Largos', '341546', 1);
+INSERT INTO `users` (`id`, `firstName`, `lastName`, `creationDate`, `address`, `phone`, `state`, `idDocumentType`, `docNumber`, `mail`) VALUES
+(30, 'con controlador', 'babel', '2021-04-25 00:00:00', 'Ov Largos', '341546', 1, 1, '94324590', 'pra@ht.com'),
+(33, 'John', 'Gardel', '2021-06-10 00:00:00', 'ov. lagos', '3432532', 1, 1, '19032740', '0'),
+(34, 'Prade', 'd', '2021-06-10 00:00:00', 'ov. lagos', '3432532', 1, 3, '934532', '0'),
+(35, 'John', 'Gardel', '2021-06-10 00:00:00', 'ov. lagos', '3432532', 1, 2, '19032740', '0'),
+(36, 'John', 'Gardel', '2021-06-10 00:00:00', 'ov. lagos', '3432532', 1, 2, '19032740', '0'),
+(37, 'con controlador modificar', 'Gardel', '2021-06-10 00:00:00', 'ov. lagos', '3432532', 1, 2, '19032740', '0'),
+(38, 'con controlador modificar', 'Gardel', '2021-06-10 00:00:00', 'ov. lagos', '3432532', 1, 2, '19032740', '0'),
+(39, 'Prade', 'Gardel', '2021-06-10 00:00:00', 'ov. lagos', '3432532', 1, 2, '934532', '0'),
+(40, 'con controlador modificar', 'Gardel', '2021-06-10 00:00:00', 'ov. lagos', '3432532', 1, 2, '19032740', '0'),
+(41, 'con controlador modificar', 'd', '2021-06-10 00:00:00', 'ov. lagos', '3432532', 1, 1, '19032740', '0'),
+(42, 'con controlador modificar', 'Gardel', '2021-06-10 00:00:00', 'ov. lagos', '34325', 1, 3, '19032740', '0'),
+(43, 'fsdf', 'sdfsd', '2021-06-10 00:00:00', 'sdfsdf', '3432532', 1, 1, '19032740', '0'),
+(44, 'fgdg', 'dfgdf', '2021-06-10 00:00:00', 'ov. lagos', '3432532', 1, 2, '3543534', '0'),
+(45, 'con controlador modificar', 'asdasd', '2021-06-10 00:00:00', 'erwerwer', '434234', 1, 1, '234234', '0');
 
 --
 -- Índices para tablas volcadas
@@ -254,6 +271,12 @@ ALTER TABLE `accounts`
   ADD PRIMARY KEY (`id`),
   ADD KEY `accounts_ibfk_1` (`idUser`),
   ADD KEY `idRole` (`idRole`);
+
+--
+-- Indices de la tabla `documenttypes`
+--
+ALTER TABLE `documenttypes`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `hangers`
@@ -307,7 +330,8 @@ ALTER TABLE `roles`
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_documentType` (`idDocumentType`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -317,7 +341,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT de la tabla `documenttypes`
+--
+ALTER TABLE `documenttypes`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `hangers`
@@ -365,7 +395,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- Restricciones para tablas volcadas
@@ -398,6 +428,12 @@ ALTER TABLE `kayaks`
   ADD CONSTRAINT `kayak_hanger` FOREIGN KEY (`idhanger`) REFERENCES `hangers` (`id`),
   ADD CONSTRAINT `kayak_kayakType` FOREIGN KEY (`idKayakType`) REFERENCES `kayaktypes` (`id`),
   ADD CONSTRAINT `kayak_partner` FOREIGN KEY (`idPartner`) REFERENCES `partners` (`id`);
+
+--
+-- Filtros para la tabla `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `user_documentType` FOREIGN KEY (`idDocumentType`) REFERENCES `documenttypes` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
