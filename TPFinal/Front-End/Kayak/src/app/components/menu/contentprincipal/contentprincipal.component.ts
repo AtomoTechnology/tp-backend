@@ -14,26 +14,27 @@ export class ContentprincipalComponent implements OnInit {
      }
 
   ngOnInit(): void {
+    debugger;
     this.menunav=[
       {
         url:"/ActionKayak",
         displayName:"Crear kayak",
-        active:"active"
+        active:"active kayak"
       },
       {
         url:"/User",
         displayName:"Crear usuario",
-        active:""
+        active:"user"
       },
       {
         url:"/Hanger",
         displayName:" Crear parches",
-        active:""
+        active:"hanger"
       },
       {
         url:"/Partner",
         displayName:"Crear socio",
-        active:""
+        active:"partner"
       }
     ]
   }

@@ -1,7 +1,7 @@
 import * as encripto from '../Helpers/Cryptographies'
 import mysqlconnection from '../DB/db'; 
 export const getUser = (req, res) =>{
-    mysqlconnection.query('SELECT * FROM users where state = 1',(err, rows, fields) =>{
+    mysqlconnection.query('SELECT * FROM users where state = 1 ORDER BY id DESC',(err, rows, fields) =>{
         if(!err){
             res.json(rows);
         }
@@ -10,11 +10,13 @@ export const getUser = (req, res) =>{
         }
     });    
 }
-export const getUserById = (req, res) =>{    
+export const GetById = (req, res) =>{ 
+    console.log("Id usuario: " + req.params.id);   
         const { id } = req.params;
     mysqlconnection.query('SELECT * FROM users where state = 1 and id =?',[id], (err, rows, fields) =>{
         if(!err){
             res.json(rows[0]);
+            console.log(rows[0])
         }
         else{
             res.json(err);
@@ -28,7 +30,7 @@ export const createUser = (req, res) =>{
     `
     const pass = ""; 
     encripto.encryptPassword(userPass).then(val =>{
-        mysqlconnection.query(query,[id, firstName, lastName, address, phone, idRole, userName, val,idDocumentType,mail,docNumber], (err, rows, fields) =>{
+        mysqlconnection.query(query,[id, firstName, lastName, address, phone, idRole, userName, val,idDocumentType, mail, docNumber], (err, rows, fields) =>{
             if(!err){          
                 return res.json({
                     status: 201,

@@ -5,6 +5,10 @@ import { User } from 'src/app/classes/user.class';
 import { TaskService } from 'src/app/services/auth/task.service';
 import { UserService } from 'src/app/services/user/user.service';
 import Swal from 'sweetalert2'
+import { LoadscriptService } from '../../services/loadScript/loadscript.service';
+
+const urljs = '../../../assets/js/menu.js';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -14,35 +18,12 @@ export class UserComponent implements OnInit {
   userlist :Array<User> = [];
   menunav:any
   constructor(
-    private task: TaskService,
+    private task: TaskService, private loadscript: LoadscriptService,
     private router: Router,private userService: UserService) {
      }
 
   ngOnInit(): void {
-  
-    debugger;
-    this.menunav=[
-      {
-        url:"/ActionKayak",
-        displayName:"Crear kayak",
-        active:""
-      },
-      {
-        url:"/User",
-        displayName:"Crear usuario",
-        active:"active"
-      },
-      {
-        url:"/Hanger",
-        displayName:" Crear parches",
-        active:""
-      },
-      {
-        url:"/Partner",
-        displayName:"Crear socio",
-        active:""
-      }
-    ]
+    this.loadscript.loadScript(urljs);     
     this.GetAll();
   }
   GetAll(){

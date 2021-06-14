@@ -21,7 +21,7 @@ export class UserService {
    });
   }
   GetById(id){
-    return this.http.get(`${this.urlBase}users?id=${id}`,
+    return this.http.get(`${this.urlBase}users/${id}`,
     {headers: new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
       'x-access-token': this.taskService.getJwtToken()})
@@ -36,14 +36,14 @@ export class UserService {
     });
   }
   Put(data){
-    return this.http.put(`${this.urlBase}users?id=${data.id}`,JSON.stringify(data),
+    return this.http.put(`${this.urlBase}users/${data.id}`,JSON.stringify(data),
     {headers: new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
       'x-access-token': this.taskService.getJwtToken()})
     });
   }
   Delete(id){
-    return this.http.delete(`${this.urlBase}users?id=${id}`,
+    return this.http.delete(`${this.urlBase}users/${id}`,
     {headers: new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
       'x-access-token': this.taskService.getJwtToken()})

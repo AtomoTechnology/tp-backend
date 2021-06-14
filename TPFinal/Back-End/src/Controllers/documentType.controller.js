@@ -1,6 +1,6 @@
 import mysqlconnection from '../DB/db'; 
 export const GetALl = (req, res) =>{
-    mysqlconnection.query('SELECT * FROM documenttypes where state = 1',(err, rows, fields) =>{
+    mysqlconnection.query('SELECT * FROM documenttypes where state = 1 ORDER BY id DESC',(err, rows, fields) =>{
         if(!err){
             res.json(rows);
         }

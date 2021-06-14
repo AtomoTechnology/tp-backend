@@ -10,6 +10,8 @@ import { Role } from '../../../classes/role';
 import { MessageService } from '../../../services/message/message.service';
 import { RoleService } from 'src/app/services/role/role.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-actionuser',
   templateUrl: './actionuser.component.html',
@@ -51,6 +53,7 @@ export class ActionuserComponent implements OnInit {
     this.roleService.GetAll().subscribe((role) =>{
       
       this.rolelist = role;
+      Active();
     });
   }
 
@@ -62,8 +65,10 @@ export class ActionuserComponent implements OnInit {
   }
 
   GetById(id){
+    debugger;
     this.userService.GetById(id).subscribe(result =>{
       this.user = JSON.parse(JSON.stringify(result));
+      debugger;
       this.browserForm.patchValue(this.user);
     })
   }
@@ -79,9 +84,16 @@ export class ActionuserComponent implements OnInit {
         mail: ['',[Validators.required,Validators.pattern(this.isEmail)]],
         address:['',[Validators.required]],
         phone:['',[Validators.required]],
-        idRole:['',[Validators.required]],
-        userName:['',[Validators.required, Validators.minLength(6),Validators.maxLength(50)]],
-        userPass:['',[Validators.required, Validators.minLength(6),Validators.maxLength(50),Validators.pattern(/^[A-Za-z0-9 ]+$/)]],
+        idRole:['',[this.OptionBtn == false ? Validators.required : 0]],
+        userName:['',[
+          this.OptionBtn == false ? Validators.required: '', 
+          this.OptionBtn == false ? Validators.minLength(6) : '',
+          this.OptionBtn == false ? Validators.maxLength(50): '']],
+        userPass:['',[
+          this.OptionBtn == false ? Validators.required: '', 
+          this.OptionBtn == false ? Validators.minLength(6): 0,
+          this.OptionBtn == false ? Validators.maxLength(50): 0,
+          this.OptionBtn == false ? Validators.pattern(/^[A-Za-z0-9 ]+$/): '']],
         state:1
       });  
     }
@@ -144,4 +156,9 @@ export class ActionuserComponent implements OnInit {
       this.messageService.Error('Error', err.error.message);
     });
   }
+}
+
+function Active(){
+  $('.actionmenu').removeClass('active');
+  $('.user').addClass('active');
 }

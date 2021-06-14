@@ -3,7 +3,7 @@ import mysqlconnection from '../DB/db';
 export const checkUserNameNoneRepeat = (req, res, next) => {
     mysqlconnection.query('SELECT * FROM accounts where userName =?',[req.body.userName], (err, rows, fields) =>{         
         if(rows.length > 0){
-            return res.status(400).json({
+            return res.status(401).json({
                 error:"error",
                 message:"Nombre usuario existe"
             });  
@@ -17,7 +17,7 @@ export const checkUserNameNoneRepeat = (req, res, next) => {
 export const checkLocationNoneRepeat = (req, res, next) => {
     mysqlconnection.query('SELECT * FROM locations where name =?',[req.body.name], (err, rows, fields) =>{         
         if(rows.length > 0){
-            return res.status(400).json({
+            return res.status(401).json({
                 error:"error",
                 message:"Esta ubicación ya existio"
             });  
@@ -47,7 +47,7 @@ export const checkRoleExisted = (req, res, next) => {
         mysqlconnection.query('SELECT * FROM roles WHERE state =?  and id =?',[1, req.body.idRole], (err, rows, fields) =>{     
                        
             if(rows.length === 0){
-                return res.status(400).json({
+                return res.status(401).json({
                     error:"error",
                     message:"Rol no existe"
                 });   
@@ -87,11 +87,11 @@ export const checkRoleUpdateExisted = (req, res, next) => {
     }
 }
 export const checkDocuUpdateExisted = (req, res, next) => {
-    if(req.body.idRole){
-        mysqlconnection.query('SELECT * FROM documenttypes WHERE state =?  and id !=? and name =?',[1, req.body.id, req.body.name], (err, rows, fields) =>{     
-                       
+    
+    mysqlconnection.query('SELECT * FROM documenttypes WHERE state =?  and id !=? and name =?',[1, req.body.id, req.body.name], (err, rows, fields) =>{     
+        if(!err){             
             if(rows.length > 0){
-                return res.status(400).json({
+                return res.status(401).json({
                     error:"error",
                     message:"Hay documento ya con ese nombre"
                 });   
@@ -99,14 +99,15 @@ export const checkDocuUpdateExisted = (req, res, next) => {
             else{
                 next();
             }
-        });  
-    }
-    else{
-        return res.status(401).json({
-            error:"error",
-            message:"Rol requiere"
-        }); 
-    }
+        }
+        else{
+            return res.status(401).json({
+                error:"error",
+                message:"Rol requiere"
+            }); 
+        }
+    });  
+    
 }
 
 
@@ -118,7 +119,7 @@ export const checkCorrectChangePass = (req, res, next) => {
             const userfound = rows[0];
             if(!userfound)
             {
-                return res.status(400).json({
+                return res.status(401).json({
                     error:"No encontrado",                    
                     message:"Usuario incorrecto"
                 });
@@ -137,7 +138,7 @@ export const checkCorrectChangePass = (req, res, next) => {
             }
         }  
         else{
-            return res.status(400).json({
+            return res.status(401).json({
                 error:"Error",                    
                 message:"No se pude establecer la conexion"
             });
@@ -164,30 +165,53 @@ export const isUserValid = (req, res, next) =>{
     }
 }
 
-// export const isUserValid = (req, res, next) =>{
-//     if(req.body.userName.length < 6){
-//         return res.status(401).json({
-//             error:"formato incorrecto",                    
-//             message:"El usuario debe tener al menos 6 caracteres"
-//         });              
-//     }
-//     else if(req.body.userName.length > 50){
-//         return res.status(401).json({
-//             error:"formato incorrecto",                    
-//             message:"El usuario no puede tener más de 50 caracteres"
-//         }); 
-//     }
-//     else{
-//         next();
-//     }
-// }
+export const EmailNoneRepeat = (req, res, next) =>{
+    mysqlconnection.query('SELECT * FROM users WHERE mail =?', [req.body.mail], (err, rows, fields) =>{     
+        if(rows.length > 0){
+            return res.status(401).json({
+                error:"error",
+                message:"Hay un usuario con ese correo electronico"
+            });  
+        }
+        else{
+            next();
+        }  
+    });  
+}
+
+export const NumDocumentNoneRepeat = (req, res, next) =>{
+    mysqlconnection.query('SELECT * FROM users WHERE docNumber =?', [req.body.docNumber], (err, rows, fields) =>{     
+        if(rows.length > 0){
+            return res.status(401).json({
+                error:"error",
+                message:"Hay un usuario con ese numero de documento"
+            });  
+        }
+        else{
+            next();
+        }  
+    });  
+}
+
+export const PhoneNoneRepeat = (req, res, next) =>{
+    mysqlconnection.query('SELECT * FROM users WHERE phone =?', [req.body.phone], (err, rows, fields) =>{     
+        if(rows.length > 0){
+            return res.status(401).json({
+                error:"error",
+                message:"Hay un usuario con ese numero de teléfono"
+            });  
+        }
+        else{
+            next();
+        }  
+    });  
+}
 
 export const isPassValid = (req, res, next) =>{
-    const { userPass} = req.body;
-
-    var mayus = new RegExp("/^[A-Z]{1,}$/");
-    var minis = new RegExp("/^[a-z]{1,}$");    
-    var num = new RegExp("/^[0-9]{1,}$");
+    const { userPass} = req.body;  
+    var mayus = /[A-Z]/;
+    var minis = /[a-z]/;    
+    var num = /[0-9]/;
     
     if(userPass.length < 6){
         return res.status(401).json({
@@ -201,19 +225,19 @@ export const isPassValid = (req, res, next) =>{
             message:"La clave no puede tener más de 50 caracteres"
         }); 
     }
-    else if(!userPass.test(mayus)){
+    else if(!mayus.test(userPass)){
         return res.status(401).json({
             error:"formato incorrecto",                    
             message:"La clave debe tener al menos una letra mayúscula"
         }); 
     }
-    else if(!userPass.test(minis)){
+    else if(!minis.test(userPass)){
         return res.status(401).json({
             error:"formato incorrecto",                    
             message:"La clave debe tener al menos una letra minúscula"
         }); 
     }
-    else if(!userPass.test(num)){
+    else if(!num.test(userPass)){
         return res.status(401).json({
             error:"formato incorrecto",                    
             message:"La clave debe tener al menos un caracter numérico"
@@ -228,7 +252,7 @@ export const IsmailValid = (req, res, next) => {
     const mail = req.body.mail;
     const isEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-    if(!mail.test(isEmail)){
+    if(!isEmail.test(mail)){
         return res.status(401).json({
             error:"formato incorrecto",                    
             message:"Esta dirección de correo: " + mail + " no es valida"

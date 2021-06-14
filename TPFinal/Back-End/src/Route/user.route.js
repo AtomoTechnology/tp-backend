@@ -7,11 +7,15 @@ const router = Router();
 router.get('/',usercontroller.getUser);
 
 //Get by id
-router.get('/:id', usercontroller.getUserById);
+router.get('/:id', usercontroller.GetById);
 
 //Create
-// ,validator.isUserValid,validator.isPassValid, validator.IsmailValid
-router.post('/',[authjwt.verifyToken,validator.checkUserNameNoneRepeat,validator.checkRoleExisted],usercontroller.createUser);
+router.post('/',[
+    authjwt.verifyToken,validator.checkUserNameNoneRepeat,
+    validator.checkRoleExisted,validator.isUserValid,validator.isPassValid,
+    validator.IsmailValid, validator.EmailNoneRepeat, validator.NumDocumentNoneRepeat,
+    validator.PhoneNoneRepeat
+    ],usercontroller.createUser);
 
 //Update
 router.put('/:id',[authjwt.verifyToken, authjwt.isAdmin,validator.checkRoleExisted, validator.IsmailValid], usercontroller.updateUser);

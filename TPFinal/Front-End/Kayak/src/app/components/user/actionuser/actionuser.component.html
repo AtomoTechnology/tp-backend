@@ -91,7 +91,7 @@
                                   </span>
                                 </div>
                               </div>
-                              <div class="form-group col-md-6">
+                              <div class="form-group col-md-6" *ngIf="!OptionBtn">
                                 <label for="inputRole">Acceso</label>
                                 <select  formControlName="idRole"  [class]="isValidField('idRole')" class="form-control" id="inputRole">
                                   <option value="">Seleccionar el role</option>

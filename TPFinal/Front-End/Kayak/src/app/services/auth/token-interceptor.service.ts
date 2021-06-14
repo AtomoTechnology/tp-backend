@@ -18,7 +18,7 @@ export class TokenInterceptorService implements HttpInterceptor {
 
     return next.handle(request).pipe(catchError (error => {
       debugger;
-      if(error instanceof HttpErrorResponse && error.status === 401){
+      if(error instanceof HttpErrorResponse && error.statusText !== "Unauthorized" && error.status === 401){
         return this.handle401Error(request, next);
       }
       else{
