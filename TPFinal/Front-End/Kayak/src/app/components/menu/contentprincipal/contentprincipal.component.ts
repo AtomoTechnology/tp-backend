@@ -11,6 +11,7 @@ export class ContentprincipalComponent implements OnInit {
   constructor(
     private task: TaskService,
     private router: Router) {
+      debugger;
      }
 
   ngOnInit(): void {

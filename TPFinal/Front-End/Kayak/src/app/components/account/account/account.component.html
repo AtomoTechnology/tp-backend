@@ -17,6 +17,16 @@
         <input type="password" name="userPass" id="userPass" class="form-control password-login"
         formControlName="userPass" [class]="isValidField('userPass')">
       </div>
+      
+      <div class="form-group lgincorrect" >
+        <!-- <div class="invalid-feedback"> -->
+          <span *ngIf="islogincorrect" >
+              {{errmsg}}
+          </span>
+        <!-- </div> -->
+      </div>
+
+      
       <div class="form-group">
         <button type="button" class="btn btn-primary btn-block" routerLink="/Principal">Cancelar</button>
         <button type="submit" class="btn btn-primary btn-block">Ingresar</button>

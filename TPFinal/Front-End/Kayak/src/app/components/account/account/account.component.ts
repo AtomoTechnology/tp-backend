@@ -12,6 +12,8 @@ import { TaskService } from 'src/app/services/auth/task.service';
 })
 export class AccountComponent implements OnInit {
   accountForm: FormGroup;
+  islogincorrect: boolean;
+  errmsg: string;
   constructor( private userService: TaskService,
     private router: Router, private fb:FormBuilder) {
       this.initForm();
@@ -32,7 +34,6 @@ export class AccountComponent implements OnInit {
       'is-invalid': validatedField.touched ? 'is-valid':'';
   }
   OnSubmit() {
-    debugger;
     if(this.accountForm.valid) {
       this.userService.Authentication(this.accountForm.value).subscribe(
         (success) => {
@@ -41,7 +42,7 @@ export class AccountComponent implements OnInit {
           let decodotken = decode(this.userService.getJwtToken());
            let role = decodotken['role'];
             if (this.userService.loggedIn() && role === ('admin').toLowerCase()) {
-              this.router.navigate(['/Browse']);
+              this.router.navigate(['/Browser']);
             } else if (this.userService.loggedIn() && role === ('socio').toLowerCase()) {
               this.router.navigate(['/socio']);
             } else if (this.userService.loggedIn() && role === ('employee').toLowerCase()) {
@@ -53,6 +54,8 @@ export class AccountComponent implements OnInit {
         },
         (err: HttpErrorResponse) => {
           debugger;
+          this.islogincorrect = true;
+          this.errmsg = err.error.message;
         }
       );
     }

@@ -4,7 +4,7 @@ import { PrincipalComponent } from "../components/principal/principal/principal.
 
 export const appRoutes: Routes = [
   {
-    path: 'Browse',
+    path: 'Browser',
     loadChildren:() => import("../modules/contentprincipal/contentprincipal.module").then((p) => p.ContentprincipalModule)
   },
   {

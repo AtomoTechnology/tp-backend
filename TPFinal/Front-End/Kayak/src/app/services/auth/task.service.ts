@@ -20,14 +20,13 @@ export class TaskService {
 
   constructor(private http: HttpClient) { }
   Authentication(auth:Auth): Observable<boolean>{
-    debugger;
     this.doLogoutUser();
     return this.http.post<any>(`${this.urlBase}auth`, auth)
     .pipe(
       tap( tokens => this.doLoginUser(auth.userName, tokens)),
       mapTo(true),
       catchError(error => {
-        return of(false)
+        throw error
       })
     );
   }
@@ -41,7 +40,6 @@ export class TaskService {
   }
 
   private storeJwtToken(jwt: string) {
-    debugger;
     localStorage.setItem(this.JWT_TOKEN, jwt);
   }
   public Logout(){
@@ -54,7 +52,6 @@ export class TaskService {
   }
 
   private doLoginUser(username: string, tokens: Tokens) {
-    debugger;
     this.loggedUser = username;
     this.storeTokens(tokens);
   }
@@ -65,7 +62,6 @@ export class TaskService {
   }
 
   private storeTokens(tokens: Tokens) {
-    debugger;
     localStorage.setItem(this.JWT_TOKEN, tokens.token);
   }
 

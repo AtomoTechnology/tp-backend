@@ -17,28 +17,29 @@ export const signin = (req, res) =>{
                 });
             }
             else{ 
-                const pass = encripto.compare(userPass,userfound.userPass);
-                if(!pass){
-                    return res.status(401).json({
-                        error:"No encontrado",                    
-                        message:"contraseña incorrecta",
-                        token:""
-                    });
-                }
-                else{ 
-                    const token = jwt.sign(
-                        {
-                            idaccount:userfound.id, 
-                            role:userfound.role, 
-                            idRole:userfound.idRole, 
-                            iduser:userfound.idUser
-                        },
-                        config.SECRET,{
-                            expiresIn:86400 // vence en un dia
-                        }
-                    );
-                    return res.status(200).json({token});
-                }            
+                    encripto.compare(userPass,userfound.userPass).then((response)=>{
+                    if(!response){
+                        return res.status(401).json({
+                            error:"No encontrado",                    
+                            message:"contraseña incorrecta",
+                            token:""
+                        });
+                    }
+                    else{ 
+                        const token = jwt.sign(
+                            {
+                                idaccount:userfound.id, 
+                                role:userfound.role, 
+                                idRole:userfound.idRole, 
+                                iduser:userfound.idUser
+                            },
+                            config.SECRET,{
+                                expiresIn:86400 // vence en un dia
+                            }
+                        );
+                        return res.status(200).json({token});
+                    }           
+                });
             }
         }
         else{
