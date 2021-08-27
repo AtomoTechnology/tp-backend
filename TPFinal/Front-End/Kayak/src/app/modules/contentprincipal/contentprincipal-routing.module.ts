@@ -21,7 +21,12 @@ const routes: Routes = [
     {
       path: 'ActionKayak',
       loadChildren:() => import("../../modules/kayakaction/kayakaction.module").then((p) => p.KayakactionModule)
-    }]
+    },
+    {
+      path:'Location',
+      loadChildren:() => import('../../modules/location/location.module').then((p) => p.LocationModule)
+    }
+  ]
   } 
 ];
 

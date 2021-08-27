@@ -36,6 +36,11 @@ export class ContentprincipalComponent implements OnInit {
         url:"/Partner",
         displayName:"Crear socio",
         active:"partner"
+      },
+      {
+        url:"/Location",
+        displayName:"Crear ubicacion",
+        active:"partner"
       }
     ]
   }

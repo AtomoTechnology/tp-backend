@@ -19,6 +19,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 // Module
 import { PrincipalComponent } from './components/principal/principal/principal.component';
 import { ContentprincipalModule } from './modules/contentprincipal/contentprincipal.module';
+import { LocationComponent } from './location/location.component';
 
 @NgModule({
   declarations: [

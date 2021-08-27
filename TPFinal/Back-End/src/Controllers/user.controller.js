@@ -30,7 +30,7 @@ export const createUser = (req, res) =>{
     `
     const pass = ""; 
     encripto.encryptPassword(userPass).then(val =>{
-        mysqlconnection.query(query,[id, firstName, lastName, address, phone, idRole, userName, val,idDocumentType, mail, docNumber], (err, rows, fields) =>{
+        mysqlconnection.query(query,[0, firstName, lastName, address, phone, idRole, userName, val,idDocumentType, mail, docNumber], (err, rows, fields) =>{
             if(!err){          
                 return res.json({
                     status: 201,
