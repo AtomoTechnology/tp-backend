@@ -1,6 +1,6 @@
 <!--Navbar -->
-<nav class="navbar sticky-top  mb-3 navbar navbar-expand-xl navbar-dark bg-dark">
-    <a class="navbar-brand" routerLink="/Browse">Kayak</a>
+<nav class="navbar sticky-top  mb-3 navbar navbar-expand-xl navbar-dark bg-dark active"  ng-click="$event.preventDefault()" ng-init="active=Browse">
+    <a class="navbar-brand" routerLink="/Browse" class="Browse" ng-click="active='Browse'">Kayak</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
       aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item {{perfil.active}} actionmenu"  *ngFor="let perfil of menunav">
-          <a class="nav-link"  routerLink={{perfil.url}}>
+          <a class="nav-link"  routerLink={{perfil.url}} class="{{perfil.displayName}}" ng-click="active='{{perfil.displayName}}'">
             {{perfil.displayName}}
             <span class="sr-only">(current)</span>
           </a>
