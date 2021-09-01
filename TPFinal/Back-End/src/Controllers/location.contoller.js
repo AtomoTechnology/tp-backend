@@ -22,8 +22,10 @@ export const getLocationById = (req, res) =>{
 }
 export const createLocation = (req, res) =>{
     const { name, description} = req.body;
-    const query = "INSERT INTO locations (name, description, state) VALUES ?";
-    var values = [[name, description, 1]];
+    const tiempoTranscurrido = Date.now();
+    const today = new Date(tiempoTranscurrido);
+    const query = "INSERT INTO locations (name, description, creationDate, state) VALUES ?";
+    var values = [[name, description, today, 1]];
     
     mysqlconnection.query(query,[values], (err, rows, fields) =>{
         if(!err){          

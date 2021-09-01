@@ -79,8 +79,8 @@
               {{user.creationDate | date: 'MM/dd/yyyy'}}
           </td>
           <td>
-            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"  [routerLink]="['/User/ActionUser/'+ user.id]"></button>
-            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="Delete(user.id)"></button>
+            <button pButton pRipple icon="pi pi-pencil" pTooltip="Modificar usuario" tooltipPosition="bottom" class="p-button-rounded p-button-success p-mr-2"  [routerLink]="['/User/ActionUser/'+ user.id]"></button>
+            <button pButton pRipple icon="pi pi-trash" pTooltip="Eliminar usuario" tooltipPosition="bottom" class="p-button-rounded p-button-warning" (click)="Delete(user.id)"></button>
         </td>
       </tr>
   </ng-template>

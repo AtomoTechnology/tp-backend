@@ -3,9 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/classes/user.class';
 import { TaskService } from 'src/app/services/auth/task.service';
-import { UserService } from 'src/app/services/user/user.service';
 import Swal from 'sweetalert2'
 import { LoadscriptService } from '../../services/loadScript/loadscript.service';
+
+import { GenericService } from '../../services/generic/generic.service';
+import { ApiController } from '../../apicontroller/api.controller';
 
 const urljs = '../../../assets/js/menu.js';
 
@@ -16,10 +18,11 @@ const urljs = '../../../assets/js/menu.js';
 })
 export class UserComponent implements OnInit {
   userlist :Array<User> = [];
-  menunav:any
+  menunav:any;
+  private ctrl = new ApiController();
   constructor(
     private task: TaskService, private loadscript: LoadscriptService,
-    private router: Router,private userService: UserService) {
+    private router: Router,private genericService:GenericService) {
      }
 
   ngOnInit(): void {
@@ -28,7 +31,7 @@ export class UserComponent implements OnInit {
   }
   GetAll(){
     debugger;
-    this.userService.GetAll().subscribe( (user) =>{
+    this.genericService.GetAll("", this.ctrl.user).subscribe( (user) =>{
       debugger;
       this.userlist = user;
     },
@@ -59,7 +62,7 @@ export class UserComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         debugger;
-        this.userService.Delete(id).subscribe((data:any) =>{
+        this.genericService.Delete(id, this.ctrl.user).subscribe((data:any) =>{
           if(data.result === 'OK')
           debugger;
           Swal.fire(

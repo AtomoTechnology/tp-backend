@@ -14,12 +14,12 @@ import { TokenInterceptorService } from './services/auth/token-interceptor.servi
 
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ApiController } from './apicontroller/api.controller';
 
 
 // Module
 import { PrincipalComponent } from './components/principal/principal/principal.component';
 import { ContentprincipalModule } from './modules/contentprincipal/contentprincipal.module';
-import { LocationComponent } from './location/location.component';
 
 @NgModule({
   declarations: [

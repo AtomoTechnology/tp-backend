@@ -28,6 +28,10 @@ export const createUser = (req, res) =>{
     const query = `
     CALL CreateOrUpdateUser(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     `
+
+    console.log(req.body);
+    console.log("Post req.body");
+
     const pass = ""; 
     encripto.encryptPassword(userPass).then(val =>{
         mysqlconnection.query(query,[0, firstName, lastName, address, phone, idRole, userName, val,idDocumentType, mail, docNumber], (err, rows, fields) =>{
@@ -48,9 +52,9 @@ export const updateUser = (req, res) =>{
     const { firstName, lastName, address, phone,idDocumentType,mail,docNumber } = req.body;
     const { id } = req.params;
     const query = `
-    CALL CreateOrUpdateUser(?, ?, ?, ?, ?, ?, ?, ?);
-    `
-    mysqlconnection.query(query,[id, firstName, lastName, address, phone,idDocumentType,mail,docNumber], (err, rows, fields) =>{
+    CALL CreateOrUpdateUser(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    `;
+    mysqlconnection.query(query,[id, firstName, lastName, address, phone,- 1, "-1", "-1",idDocumentType,mail,docNumber], (err, rows, fields) =>{       
         if(!err){
             res.json({
                 status: 201,

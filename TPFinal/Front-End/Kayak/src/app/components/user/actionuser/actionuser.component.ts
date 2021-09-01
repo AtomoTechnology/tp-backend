@@ -3,12 +3,12 @@ import { User } from 'src/app/classes/user.class';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentType } from '../../../classes/document';
-import { UserService } from 'src/app/services/user/user.service';
-import { DocumenttypeService } from '../../../services/documenttype/documenttype.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Role } from '../../../classes/role';
 import { MessageService } from '../../../services/message/message.service';
-import { RoleService } from 'src/app/services/role/role.service';
+
+import { GenericService } from '../../../services/generic/generic.service';
+import { ApiController } from '../../../apicontroller/api.controller';
 
 declare var $: any;
 
@@ -23,58 +23,60 @@ export class ActionuserComponent implements OnInit {
   rolelist :Array<Role> = [];
   doclist :Array<DocumentType> = [];
   user:User;
+  private ctrl = new ApiController();
 
   browserForm: FormGroup;
   private isEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
-  constructor(private roleService: RoleService, private fb:FormBuilder, private route: ActivatedRoute,
-    private router:Router,private userService: UserService,private messageService: MessageService,
-    private docservice:DocumenttypeService) {
+  constructor(private fb:FormBuilder, private route: ActivatedRoute,
+    private router:Router,private genericService:GenericService,private messageService: MessageService) {
       let id = this.route.snapshot.paramMap.get('id');
+      this.OptionBtn = id !== null ? true : false;
       this.initForm();
       if(id !== null){
         this.Option ="Actualizar usuario";
-        this.OptionBtn = true;
         this.GetById(parseInt(id));
       }
       else{
         this.Option ="Crear usuario";
-        this.OptionBtn = false;
       }
     }
 
   ngOnInit(): void {
-    debugger;
     this.GetAllDocument();
     this.GetAllRole();
   }
 
   GetAllRole(){
-    this.roleService.GetAll().subscribe((role) =>{
-      
+    this.genericService.GetAll("", this.ctrl.role).subscribe((role) =>{      
       this.rolelist = role;
       Active();
     });
   }
 
   GetAllDocument(){
-    this.docservice.GetAll().subscribe((ser) =>{
-      debugger;
+    this.genericService.GetAll("", this.ctrl.documenttype).subscribe((ser) =>{
       this.doclist = ser;
     });
   }
 
   GetById(id){
-    debugger;
-    this.userService.GetById(id).subscribe(result =>{
+    this.genericService.GetById(id, this.ctrl.user).subscribe(result =>{
       this.user = JSON.parse(JSON.stringify(result));
-      debugger;
       this.browserForm.patchValue(this.user);
     })
   }
   
   
     private initForm():void{
+      let val1 = this.OptionBtn == false ?[
+        Validators.required,Validators.minLength(6), Validators.maxLength(50)]: '';
+
+      let val2 = this.OptionBtn == false ?[ Validators.required, Validators.minLength(6),
+        Validators.maxLength(50),Validators.pattern(/^[A-Za-z0-9 ]+$/)]: '';
+
+      let val3 = this.OptionBtn == false ? Validators.required : 0;
+
       this.browserForm = this.fb.group({
         id:0,      
         idDocumentType: ['',[Validators.required]],
@@ -84,16 +86,9 @@ export class ActionuserComponent implements OnInit {
         mail: ['',[Validators.required,Validators.pattern(this.isEmail)]],
         address:['',[Validators.required]],
         phone:['',[Validators.required]],
-        idRole:['',[this.OptionBtn == false ? Validators.required : 0]],
-        userName:['',[
-          this.OptionBtn == false ? Validators.required: '', 
-          this.OptionBtn == false ? Validators.minLength(6) : '',
-          this.OptionBtn == false ? Validators.maxLength(50): '']],
-        userPass:['',[
-          this.OptionBtn == false ? Validators.required: '', 
-          this.OptionBtn == false ? Validators.minLength(6): 0,
-          this.OptionBtn == false ? Validators.maxLength(50): 0,
-          this.OptionBtn == false ? Validators.pattern(/^[A-Za-z0-9 ]+$/): '']],
+        idRole:['',val3],
+        userName:['', val1],
+        userPass:['', val2],
         state:1
       });  
     }
@@ -120,7 +115,7 @@ export class ActionuserComponent implements OnInit {
   
   ActionCreate(){
     debugger;
-    this.userService.Post(this.browserForm.value).subscribe((data:any) =>{
+    this.genericService.Post(this.browserForm.value, this.ctrl.user).subscribe((data:any) =>{
       debugger;
       if(data.status === 201){
         setTimeout(()=>{
@@ -141,7 +136,8 @@ export class ActionuserComponent implements OnInit {
 
   ActionUpdate(){
     debugger;
-    this.userService.Put(this.browserForm.value).subscribe((data:any) =>{
+    this.genericService.Put(this.browserForm.value, this.ctrl.user).subscribe((data:any) =>{
+      debugger;
       if(data.status === 201){
         setTimeout(()=>{
           this.router.navigate(['/User']);
@@ -153,6 +149,7 @@ export class ActionuserComponent implements OnInit {
       }
     },
     (err: HttpErrorResponse) => {
+      debugger;
       this.messageService.Error('Error', err.error.message);
     });
   }

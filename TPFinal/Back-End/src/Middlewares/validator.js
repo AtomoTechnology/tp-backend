@@ -43,9 +43,8 @@ export const checkDocumentNoneRepeat = (req, res, next) => {
 }
 
 export const checkRoleExisted = (req, res, next) => {
-    if(req.body.idRole){
-        mysqlconnection.query('SELECT * FROM roles WHERE state =?  and id =?',[1, req.body.idRole], (err, rows, fields) =>{     
-                       
+    if(req.idRole){
+        mysqlconnection.query('SELECT * FROM roles WHERE state =?  and id =?',[1, req.idRole], (err, rows, fields) =>{ 
             if(rows.length === 0){
                 return res.status(401).json({
                     error:"error",
@@ -66,8 +65,7 @@ export const checkRoleExisted = (req, res, next) => {
 }
 export const checkRoleUpdateExisted = (req, res, next) => {
     if(req.body.idRole){
-        mysqlconnection.query('SELECT * FROM roles WHERE state =?  and id !=? name =?',[1, req.idRole, req.role], (err, rows, fields) =>{     
-                       
+        mysqlconnection.query('SELECT * FROM roles WHERE state =?  and id !=? name =?',[1, req.idRole, req.role], (err, rows, fields) =>{  
             if(rows.length === 0){
                 return res.status(400).json({
                     error:"error",
@@ -249,9 +247,9 @@ export const isPassValid = (req, res, next) =>{
 }
 
 export const IsmailValid = (req, res, next) => {
-    const mail = req.body.mail;
+    const {mail} = req.body;
     const isEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
+    console.log(req.body);
     if(!isEmail.test(mail)){
         return res.status(401).json({
             error:"formato incorrecto",                    
