@@ -1,6 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
-import '../DB/db';
+const sequelize = require('../DB/db');
 // Start call Route
 import userRoute from '../Route/user.route';
 import authRoute from '../Route/auth.router';
@@ -28,13 +28,7 @@ app.get('/',(req, res) =>{
         version:app.get('pkg').version
     });
 });
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', '*');
-//     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-//     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-//     res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-//     next();
-// });
+
 var corsOptions = {
     origin: '*',
     optionsSuccessStatus: 200 // For legacy browser support
@@ -53,4 +47,12 @@ app.use('/api/v1/roles', roleRoute);
 //Starting
 app.listen(app.get('port'), () =>{
     console.log('server on port',app.get('port'));
+
+    //Connection to bd
+    sequelize.sync({force: false}).then( () =>{
+        console.log('DB is conected'); 
+    }).catch(err =>{
+        console.log(err);
+        return;
+    });
 });

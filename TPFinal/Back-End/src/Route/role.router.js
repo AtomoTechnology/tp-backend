@@ -4,7 +4,7 @@ import * as rolepecontroller from '../Controllers/role.controller';
 const router = Router();
 
 //Get All user
-router.get('/',[authjwt.verifyToken, authjwt.isAdmin],rolepecontroller.GetALl);
+router.get('/',[authjwt.verifyToken, authjwt.isAdmin],rolepecontroller.GetAll);
 
 //Get by id
 router.get('/:id',[authjwt.verifyToken, authjwt.isAdmin], rolepecontroller.GetById);

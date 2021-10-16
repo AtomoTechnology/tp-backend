@@ -1,69 +1,70 @@
 import mysqlconnection from '../DB/db'; 
-export const GetALl = (req, res) =>{
-    mysqlconnection.query('SELECT * FROM roles where state = 1 ORDER BY id DESC',(err, rows, fields) =>{
-        if(!err){
-            res.json(rows);
+const role =  require('../DB/models/role');
+export const GetAll = (req, res) =>{
+    role.findAll({
+        attributes: ['id', 'name', 'description', 'state'],
+        where: {
+            state: 1
         }
-        else{
-            res.json(err);
-        }
-    });    
+    }).then(result =>{
+        res.json(result);
+    })   
 }
 export const GetById = (req, res) =>{    
-        const { id } = req.params;
-    mysqlconnection.query('SELECT * FROM roles where state = 1 and id =?',[id], (err, rows, fields) =>{
-        if(!err){
-            res.json(rows[0]);
-        }
-        else{
-            res.json(err);
-        }
-    });    
+    //     const { id } = req.params;
+    // mysqlconnection.query('SELECT * FROM roles where state = 1 and id =?',[id], (err, rows, fields) =>{
+    //     if(!err){
+    //         res.json(rows[0]);
+    //     }
+    //     else{
+    //         res.json(err);
+    //     }
+    // });    
 }
 export const Post = (req, res) =>{
-    const { name, description} = req.body;
-    const query = "INSERT INTO roles (name, description, state) VALUES ?";
-    var values = [[name, description, 1]];
+    // const { name, description} = req.body;
+    // const query = "INSERT INTO roles (name, description, state) VALUES ?";
+    // var values = [[name, description, 1]];
     
-    mysqlconnection.query(query,[values], (err, rows, fields) =>{
-        if(!err){          
-            return res.json({
-                status: 201,
-                message:'El role fue guardo con exito'
-            });
-        }
-        else{
-            return res.json(err);
-        }
-    });
+    // mysqlconnection.query(query,[values], (err, rows, fields) =>{
+    //     if(!err){          
+    //         return res.json({
+    //             status: 201,
+    //             message:'El role fue guardo con exito'
+    //         });
+    //     }
+    //     else{
+    //         return res.json(err);
+    //     }
+    // });
    
 }
 export const Put = (req, res) =>{
-    const { name, description } = req.body;
-    const { id } = req.params;   
-    mysqlconnection.query(`UPDATE roles SET name = '${name}',description = '${description}' WHERE id =${[id]}`, (err, rows, fields) =>{
-        if(!err){
-            res.json({
-                status: 201,
-                message:'El role fue modificado con exito'
-            });
-        }
-        else{
-            return res.json(err);
-        }
-    });
+    // const { name, description } = req.body;
+    // const { id } = req.params;   
+    // mysqlconnection.query(`UPDATE roles SET name = '${name}',description = '${description}' WHERE id =${[id]}`, (err, rows, fields) =>{
+    //     if(!err){
+    //         res.json({
+    //             status: 201,
+    //             message:'El role fue modificado con exito'
+    //         });
+    //     }
+    //     else{
+    //         return res.json(err);
+    //     }
+    // });
 }
 export const Delete = (req, res) =>{  
-    const { id } = req.params;
-    mysqlconnection.query('UPDATE roles SET state = 2 WHERE id =?',[id], (err, rows, fields) =>{
-        if(!err){
-            res.json({
-                status: 201,
-                message:'El role fue eliminado con exito'
-            });
-        }
-        else{
-            return res.json(err);
-        }
-    });
+    // const { id } = req.params;
+    // mysqlconnection.query('UPDATE roles SET state = 2 WHERE id =?',[id], (err, rows, fields) =>{
+    //     if(!err){
+    //         res.json({
+    //             status: 201,
+    //             message:'El role fue eliminado con exito'
+    //         });
+    //     }
+    //     else{
+    //         return res.json(err);
+    //     }
+    // });
 }

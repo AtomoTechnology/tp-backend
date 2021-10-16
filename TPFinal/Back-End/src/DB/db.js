@@ -1,20 +1,24 @@
-import mysql from 'mysql';
+const { Sequelize } = require('sequelize');
+const { database } = require('../config/config');
+require('dotenv').config();
 
-const mysqlconnection = mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'516euge94324590',
-    database:'kayak'
-});
-
-mysqlconnection.connect( (err) =>{
-    if(err){
-        console.log(err);
-        return;
+const sequelize = new Sequelize(
+    database.database,
+    database.user,
+    database.password,{
+        host:database.host,
+        dialect:"mysql",
+        define: {
+            timestamps: false
+        },
+        operatorsAliases: false,
+        logging: false, // <--- Disable logging
+        pool: {
+            max: 5,
+            min: 0,
+            acquire: 30000,
+            idle: 10000
+        }
     }
-    else{
-       console.log('DB is conected'); 
-    }
-});
-
-module.exports = mysqlconnection;
+);
+module.exports = sequelize;

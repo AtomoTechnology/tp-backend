@@ -1,17 +1,37 @@
 import mysqlconnection from '../DB/db'; 
+const role = require('../DB/models/role');
+const auth = require('../DB/models/auth');
+const user = require('../DB/models/user');
+const documenttype = require('../DB/models/documenttype');
 
 export const checkUserNameNoneRepeat = (req, res, next) => {
-    mysqlconnection.query('SELECT * FROM accounts where userName =?',[req.body.userName], (err, rows, fields) =>{         
-        if(rows.length > 0){
-            return res.status(401).json({
-                error:"error",
-                message:"Nombre usuario existe"
-            });  
+    console.log("entrando checkUserNameNoneRepeat con userName: ",req.body.userName);
+    auth.findAll({
+        attributes: ['id', 'userName', 'idUser', 'state'],
+        where: {
+            userName: req.body.userName
         }
-        else{
-            next();
+    })
+    .then( result =>{
+        if (result.length > 0) {
+            return res.status(404).json({
+                error: "error",
+                message: "Nombre usuario existe"
+            });
         }
-    });  
+        next();
+    });
+    // mysqlconnection.query('SELECT * FROM accounts where userName =?',[req.body.userName], (err, rows, fields) =>{         
+    //     if(rows.length > 0){
+    //         return res.status(401).json({
+    //             error:"error",
+    //             message:"Nombre usuario existe"
+    //         });  
+    //     }
+    //     else{
+    //         next();
+    //     }
+    // });  
 }
 
 export const checkLocationNoneRepeat = (req, res, next) => {
@@ -43,9 +63,17 @@ export const checkDocumentNoneRepeat = (req, res, next) => {
 }
 
 export const checkRoleExisted = (req, res, next) => {
+    
+    console.log("entrando checkRoleExisted con id: ",req.idRole);
     if(req.idRole){
-        mysqlconnection.query('SELECT * FROM roles WHERE state =?  and id =?',[1, req.idRole], (err, rows, fields) =>{ 
-            if(rows.length === 0){
+        role.findAll({
+            attributes: ['id', 'name', 'description', 'state'],
+            where: {
+                state: 1,
+                id: req.idRole
+            }
+        }).then( result =>{
+            if(result.length === 0){
                 return res.status(401).json({
                     error:"error",
                     message:"Rol no existe"
@@ -54,7 +82,7 @@ export const checkRoleExisted = (req, res, next) => {
             else{
                 next();
             }
-        });  
+        }); 
     }
     else{
         return res.status(401).json({
@@ -164,45 +192,64 @@ export const isUserValid = (req, res, next) =>{
 }
 
 export const EmailNoneRepeat = (req, res, next) =>{
-    mysqlconnection.query('SELECT * FROM users WHERE mail =?', [req.body.mail], (err, rows, fields) =>{     
-        if(rows.length > 0){
-            return res.status(401).json({
-                error:"error",
-                message:"Hay un usuario con ese correo electronico"
-            });  
+    user.findAll({
+        attributes: ['id', 'state'],
+        where: {
+            mail: req.body.mail
         }
-        else{
-            next();
-        }  
-    });  
+    })
+    .then( result =>{
+        if (result.length > 0) {
+            return res.json({
+                code: 404,
+                error: "error",
+                message: "Hay un usuario con ese correo electronico"
+            });
+        }
+        next();
+    }); 
 }
 
 export const NumDocumentNoneRepeat = (req, res, next) =>{
-    mysqlconnection.query('SELECT * FROM users WHERE docNumber =?', [req.body.docNumber], (err, rows, fields) =>{     
-        if(rows.length > 0){
-            return res.status(401).json({
+    
+    user.findAll({
+        attributes: ['id', 'state'],
+        where: {
+            state: 1,
+            docNumber: req.body.docNumber
+        }
+    }).then( result =>{
+        console.log("entrando NumDocumentNoneRepeat con docNumber: ",result);
+        if(result.length > 0){
+            return res.json({
+                code: 401, 
                 error:"error",
                 message:"Hay un usuario con ese numero de documento"
-            });  
+            });   
         }
         else{
             next();
-        }  
-    });  
+        }
+    });   
 }
 
 export const PhoneNoneRepeat = (req, res, next) =>{
-    mysqlconnection.query('SELECT * FROM users WHERE phone =?', [req.body.phone], (err, rows, fields) =>{     
-        if(rows.length > 0){
-            return res.status(401).json({
-                error:"error",
-                message:"Hay un usuario con ese numero de teléfono"
-            });  
+    user.findAll({
+        attributes: ['id', 'state'],
+        where: {
+            phone: req.body.phone
         }
-        else{
-            next();
-        }  
-    });  
+    })
+    .then( result =>{
+        if (result.length > 0) {
+            return res.json({
+                code: 404,
+                error: "error",
+                message: "Hay un usuario con ese numero de teléfono"
+            });
+        }
+        next();
+    }); 
 }
 
 export const isPassValid = (req, res, next) =>{
