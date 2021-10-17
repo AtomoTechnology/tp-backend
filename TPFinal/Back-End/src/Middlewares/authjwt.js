@@ -20,7 +20,7 @@ export const verifyToken = async (req, res, next) => {
         req.role = decode.role;
         req.idRole = decode.idRole;
 
-        console.log("entrando verifyToken con id: ",req.id);
+        // console.log("entrando verifyToken con id: ",req.id);
         auth.findOne({
             attributes: ['id', 'userName', 'idUser', 'state'],
             where: {
@@ -29,7 +29,7 @@ export const verifyToken = async (req, res, next) => {
             }
         })
         .then( result =>{            
-        console.log("entrando verifyToken con result: ",result);
+        // console.log("entrando verifyToken con result: ",result);
             if (result == null) {
                 return res.status(404).json({
                     error: "error",
@@ -48,7 +48,7 @@ export const verifyToken = async (req, res, next) => {
 
 export const isAdmin = async (req, res, next) => {
     try {        
-        console.log("entrando isAdmin con role: ",req.role);
+        // console.log("entrando isAdmin con role: ",req.role);
         role.findOne({
             attributes: ['id', 'name', 'description', 'state'],
             where: {
@@ -56,7 +56,7 @@ export const isAdmin = async (req, res, next) => {
                 name: req.role
             }
         }).then(result => {
-            console.log("entrando then isAdmin con role: ",result);
+            // console.log("entrando then isAdmin con role: ",result);
             if (result != null) {
                 if (result.dataValues.name.toLowerCase() === ("admin").toLowerCase()) {
                     next();

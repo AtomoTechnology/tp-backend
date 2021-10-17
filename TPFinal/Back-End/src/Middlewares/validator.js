@@ -5,7 +5,7 @@ const user = require('../DB/models/user');
 const documenttype = require('../DB/models/documenttype');
 
 export const checkUserNameNoneRepeat = (req, res, next) => {
-    console.log("entrando checkUserNameNoneRepeat con userName: ",req.body.userName);
+    // console.log("entrando checkUserNameNoneRepeat con userName: ",req.body.userName);
     auth.findAll({
         attributes: ['id', 'userName', 'idUser', 'state'],
         where: {
@@ -64,7 +64,7 @@ export const checkDocumentNoneRepeat = (req, res, next) => {
 
 export const checkRoleExisted = (req, res, next) => {
     
-    console.log("entrando checkRoleExisted con id: ",req.idRole);
+    // console.log("entrando checkRoleExisted con id: ",req.idRole);
     if(req.idRole){
         role.findAll({
             attributes: ['id', 'name', 'description', 'state'],
@@ -219,7 +219,7 @@ export const NumDocumentNoneRepeat = (req, res, next) =>{
             docNumber: req.body.docNumber
         }
     }).then( result =>{
-        console.log("entrando NumDocumentNoneRepeat con docNumber: ",result);
+        // console.log("entrando NumDocumentNoneRepeat con docNumber: ",result);
         if(result.length > 0){
             return res.json({
                 code: 401, 
@@ -296,7 +296,7 @@ export const isPassValid = (req, res, next) =>{
 export const IsmailValid = (req, res, next) => {
     const {mail} = req.body;
     const isEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    console.log(req.body);
+    // console.log(req.body);
     if(!isEmail.test(mail)){
         return res.status(401).json({
             error:"formato incorrecto",                    

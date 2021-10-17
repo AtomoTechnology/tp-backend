@@ -11,13 +11,20 @@ User.init({
     firstName: DataTypes.STRING, 
     lastName: DataTypes.STRING, 
     address: DataTypes.STRING, 
-    phone: DataTypes.STRING, 
-    userName: DataTypes.STRING, 
-    userPass: DataTypes.STRING, 
-    idRole: DataTypes.BIGINT,
+    phone: DataTypes.STRING,
     idDocumentType: DataTypes.BIGINT,
-    mail: DataTypes.STRING,
     docNumber: DataTypes.STRING,
+    mail:{
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate(value) {
+            if (!validator.isEmail(value)) {
+                throw new Error('Email incorrecto');
+            }
+        }
+    },
+    creationDate:DataTypes.DATE,
     state: DataTypes.INTEGER  
 },
 { sequelize, modelName: 'users' });
