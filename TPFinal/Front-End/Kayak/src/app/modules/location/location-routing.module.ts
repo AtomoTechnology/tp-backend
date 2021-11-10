@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ActionlocationComponent } from 'src/app/components/location/actionlocation/actionlocation.component';
+import { LocationComponent } from 'src/app/components/location/location.component';
 import { AuthGuard } from 'src/app/guard/auth.guard';
 import { RoleGuardGuard } from 'src/app/guard/role-guard.guard';
-import { LocationComponent } from 'src/app/location/location.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,26 @@ const routes: Routes = [
       expectedRole: 'admin',
       title: 'Ubicacion Kayak'
     }
+  },
+  {
+    path: 'ActionLocation',
+    canLoad: [AuthGuard],
+    canActivate: [RoleGuardGuard],
+    component: ActionlocationComponent,
+    data: {
+      expectedRole: 'admin',
+      title: 'Crear ubicacion'
+      }
+  },
+  {
+    path: 'ActionLocation/:id',
+    canLoad: [AuthGuard],
+    canActivate: [RoleGuardGuard],
+    component: ActionlocationComponent,
+    data: {
+      expectedRole: 'admin',
+      title: 'Actulizar ubicacion'
+      }
   }
 ];
 

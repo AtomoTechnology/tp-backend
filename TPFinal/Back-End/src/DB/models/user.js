@@ -1,5 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize =  require('../db');
+import kayak from './kayak';
+import account from './account';
 
 class User extends Model {}
 User.init({
@@ -28,6 +30,13 @@ User.init({
     state: DataTypes.INTEGER  
 },
 { sequelize, modelName: 'users' });
+
+//Relacion
+    User.hasMany(kayak);
+    kayak.belongsTo(User);
+
+    User.hasMany(account);
+    account.belongsTo(User);
 
 module.exports = User;
 

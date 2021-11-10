@@ -1,0 +1,12 @@
+th{
+    width: 25%!important;
+}
+#contenido {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.modal-dialog {
+    max-width: 73%!important;
+}

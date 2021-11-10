@@ -1,0 +1,77 @@
+<div class="container">
+    <p-table #dt [value]="list"  dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
+    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+    [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [filterDelay]="0">
+    <ng-template pTemplate="caption">
+        <div class="table-header">
+          <div class="row">
+            <div class="col-md-12 col-md-offset-2">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                  <h5><strong>Lista de ubicacion</strong></h5>
+                  <a href="/Hanger/ActionHanger" class="btn btn-primary btn-sm">Nuevo ubicacion</a>
+                </div>
+            </div>
+          </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header" class="col-md-12 col-md-offset-2">
+        <tr>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+                Codigo
+            </div>
+          </th>
+            <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Ubicación
+                </div>
+            </th>
+            <th >
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Descripcion
+                </div>
+            </th>
+            <th >
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Fecha de creation
+                </div>
+            </th>
+            <th>
+              <div class="p-d-flex p-jc-between p-ai-center">
+                Action
+            </div>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-hanger>
+        <tr class="p-selectable-row">
+            <td>
+                {{hanger.id}}
+            </td>
+            <td>
+                {{hanger.location}}
+            </td>
+            <td>
+                {{hanger.description}}
+            </td>
+            <td>
+                {{hanger.creationDate | date: 'MM/dd/yyyy'}}
+            </td>
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" pTooltip="Modificar usuario" tooltipPosition="bottom" class="p-button-rounded p-button-success p-mr-2"  [routerLink]="['/Hanger/ActionHanger/'+ hanger.id]"></button>
+              <button pButton pRipple icon="pi pi-trash" pTooltip="Eliminar usuario" tooltipPosition="bottom" class="p-button-rounded p-button-warning" (click)="Delete(hanger.id)"></button>
+          </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="8">No hay parchas creado.</td>
+        </tr>
+    </ng-template>
+    </p-table>
+</div>
+  
+  
+
+

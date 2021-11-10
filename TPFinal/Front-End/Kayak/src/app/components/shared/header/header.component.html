@@ -18,7 +18,8 @@
             aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user"></i>Mi perfil </a>
           <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-            <a class="dropdown-item" href="#">Mi cuenta</a>
+            <a class="dropdown-item" routerLink={{linkperfil}}>Mi cuenta</a>
+            <a class="dropdown-item" [routerLink]="['/User/ChangePassWord']">Cambiar contraseña</a>
             <a class="dropdown-item" (click)="LogoutEmitter()" style="cursor: pointer;">Cerrar sesion</a>
           </div>
         </li>

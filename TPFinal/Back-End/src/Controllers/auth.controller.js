@@ -1,26 +1,40 @@
 import * as encripto from '../Helpers/Cryptographies';
 import config from '../config/config';
 import jwt from 'jsonwebtoken';
-const auth =  require('../DB/models/auth');
+const account = require('../DB/models/account');
+import auth from '../DB/models/auth';
+import role from '../DB/models/role';
+require('dotenv').config();
+
 const sequelize = require('../DB/db');
 const { QueryTypes } = require('sequelize');
 
-export const SignIn = (req, res) =>{   
+export const SignIn = (req, res) =>{ 
     const { userName, userPass} = req.body;  
-    sequelize.query(`SELECT acc.id, acc.idUser, acc.idRole, acc.userName, acc.userPass, rol.name as role FROM accounts acc inner join roles rol on acc.idRole = rol.id where userName ="${userName}" and acc.state=1`, { type: QueryTypes.SELECT })
+    auth.findAll({
+        attributes: ['id', 'userId', 'roleId', 'userName','userPass'],
+        include: role ,
+        where: {
+            state: 1,
+            userName: userName
+        }
+    })
     .then(account =>{
-        if (account.length == 0)
+        if (!account)
         {   
-            return res.status(400).json({
+            return res.json({
+                status: parseInt(process.env.server_notfount_code),
                 error:"No encontrado",                    
                 message:"Usuario incorrecto"
             });
         }
         else{
-            encripto.compare(userPass,account[0].userPass).then((response)=>
+            console.log("ROle include: ",account[0].dataValues.role.dataValues.name);
+            encripto.compare(userPass,account[0].dataValues.userPass).then((response)=>
             {
                 if(!response){
-                    return res.status(401).json({
+                    return res.json({
+                        status: parseInt(process.env.server_notfount_code),
                         error:"No encontrado",                    
                         message:"contraseña incorrecta",
                         token:""
@@ -30,49 +44,77 @@ export const SignIn = (req, res) =>{
                 { 
                     const token = jwt.sign(
                         {
-                            idaccount:account[0].id, 
-                            role:account[0].role, 
-                            idRole:account[0].idRole, 
-                            iduser:account[0].idUser
+                            idaccount:account[0].dataValues.id, 
+                            role:account[0].dataValues.role.dataValues.name, 
+                            idRole:account[0].dataValues.roleId, 
+                            iduser:account[0].dataValues.userId
                         },
                         config.SECRET,{
                             expiresIn:86400 // vence en un dia
                         }
                     );
-                    return res.status(200).json({token});
+                    return res.json({
+                        status: parseInt(process.env.success_code),
+                        token: token
+                    });
                 }  
             })
         }
     });      
 }
 
-export const GetById = (req, res) =>{    
-    
-    // const { id } = req.params;
-    // mysqlconnection.query('SELECT * FROM accounts where state = 1 and id =?',[id], (err, rows, fields) =>{
-    //     if(!err){
-    //         res.json(rows[0]);
-    //     }
-    //     else{
-    //         res.json(err);
-    //     }
-    // });    
+export const GetAll = (req, res) => {
+    account.findAll({
+        attributes: ['id', 'userName', 'userId', 'roleId', 'state'],
+        where: {
+            state: 1
+        },
+        order: [
+            ['id', 'DESC'],
+        ]
+    }).then(result => {
+        res.json(result);
+    })
+}
+
+export const GetById = (req, res) =>{        
+    const {
+        id
+    } = req.params;
+    account.findOne({
+        attributes: ['id', 'userName', 'userId', 'roleId', 'state'],
+        where: {
+            id: id,
+            state: 1
+        }
+    }).then(result => {
+        res.json(result);
+    });  
 }
 
 export const Put = (req, res) =>{
-    // const { idUser, userPass } = req.body;
-    // const { id } = req.params; 
-    // encripto.encryptPassword(userPass).then(val =>{  
-    //     mysqlconnection.query(`UPDATE accounts SET userPass = '${val}' WHERE id =${[id]}`, (err, rows, fields) =>{
-    //         if(!err){
-    //             res.json({
-    //                 status: 201,
-    //                 message:'La contraeña ha sido modificada con exito'
-    //             });
-    //         }
-    //         else{
-    //             return res.json(err);
-    //         }
-    //     });
-    // });
+    const { newUserPass } = req.body;   
+    const { id } = req.params;
+    encripto.encryptPassword(newUserPass).then(val => {
+        account.update({
+            userPass: val
+        }, {
+            where: {
+                id: id
+            }
+        }).then((response) =>{ 
+            if(response){
+                res.json({
+                    status:  parseInt(process.env.success_code),
+                    message:'La contraeña ha sido modificada con exito'
+                });
+            }
+            else{
+                res.json(response);
+            }
+        })
+        .catch((err) =>{
+            res.json(err);
+        })
+    });;
 }

@@ -55,7 +55,7 @@ export class AccountComponent implements OnInit {
         (err: HttpErrorResponse) => {
           debugger;
           this.islogincorrect = true;
-          this.errmsg = err.error.message;
+          this.errmsg = err.message;
         }
       );
     }

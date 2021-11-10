@@ -40,17 +40,6 @@ export class UserComponent implements OnInit {
     });
   }
 
-  Logout(islogout = false){
-    debugger;
-    if(islogout){
-      let val = this.task.Logout();
-      if(val){
-        this.router.navigate(['/Account']);
-      }
-    }
-  }
-
-
   Delete(id){
     Swal.fire({
       title: '¿Esta seguro desea eliminarlo?',
@@ -63,8 +52,9 @@ export class UserComponent implements OnInit {
       if (result.isConfirmed) {
         debugger;
         this.genericService.Delete(id, this.ctrl.user).subscribe((data:any) =>{
-          if(data.result === 'OK')
           debugger;
+          if(data.status === 200){
+            debugger;
           Swal.fire(
             'Eliminado!',
             'El archivo fue eliminado con exito',
@@ -72,6 +62,8 @@ export class UserComponent implements OnInit {
           ).then((result) =>{
               this.GetAll();
           })
+          }
+          
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(

@@ -19,13 +19,17 @@ const routes: Routes = [
       loadChildren:() => import("../../modules/user/user.module").then((p) => p.UserModule)
     },
     {
-      path: 'ActionKayak',
-      loadChildren:() => import("../../modules/kayakaction/kayakaction.module").then((p) => p.KayakactionModule)
+      path: 'Kayak',
+      loadChildren:() => import("../../modules/kayak/kayak.module").then((p) => p.KayakModule)
     },
     {
       path:'Location',
       loadChildren:() => import('../../modules/location/location.module').then((p) => p.LocationModule)
-    }
+    },
+    {
+      path:'Hanger',
+      loadChildren:() => import('../../modules/hanger/hanger.module').then((p) => p.HangerModule)
+    }    
   ]
   } 
 ];

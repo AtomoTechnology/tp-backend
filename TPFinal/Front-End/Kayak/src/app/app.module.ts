@@ -14,18 +14,27 @@ import { TokenInterceptorService } from './services/auth/token-interceptor.servi
 
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ApiController } from './apicontroller/api.controller';
 
 
 // Module
 import { PrincipalComponent } from './components/principal/principal/principal.component';
 import { ContentprincipalModule } from './modules/contentprincipal/contentprincipal.module';
+import { ChangepasswordComponent } from './components/account/changepassword/changepassword.component';
+import { PerfilComponent } from './components/user/perfil/perfil.component';
+import { ActionlocationComponent } from './components/location/actionlocation/actionlocation.component';
+import { ActionhangerComponent } from './components/hanger/actionhanger/actionhanger.component';
+import { KayakComponent } from './components/kayaks/kayak/kayak.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccountComponent,
-    PrincipalComponent
+    PrincipalComponent,
+    ChangepasswordComponent,
+    PerfilComponent,
+    ActionlocationComponent,
+    ActionhangerComponent,
+    KayakComponent
   ],
   imports: [
     BrowserModule,FormsModule,ReactiveFormsModule, 

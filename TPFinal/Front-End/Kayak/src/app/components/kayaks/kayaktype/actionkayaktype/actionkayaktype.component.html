@@ -1,0 +1,43 @@
+<section id="cover" class="min-vh-100">
+    <div id="cover-caption">
+        <div class="container">
+            <div class="row text-white">
+                <div class="col-xl-10 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form">
+                    <h1 class="display-4 py-2 text-truncate">{{Option}}</h1>
+                    <div class="px-4">
+                        <form action="" class="justify-content-center"  [formGroup]="browserForm" (ngSubmit)="Create()">
+                            <div class="form-row">
+                              <div class="form-group col-md-12">
+                                <label for="name">Nombre</label>
+                                <input type="text" class="form-control" id="name" placeholder="Nombre" name="name"
+                                formControlName="name"  [class]="isValidField('name')">
+                                <div class="invalid-feedback">
+                                  <span *ngIf="browserForm.get('name').errors?.required">
+                                      Debe ingresar el nombre de la ubicación
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+  
+                            <div class="form-row">
+                              <div class="form-group col-md-12">
+                                <label for="inputdescription">description</label>
+                                <textarea type="text" rows="6" class="form-control" id="inputdescription" placeholder="Descripción" name="phone"
+                                formControlName="description" ></textarea>                               
+                              </div>
+                            </div>
+  
+                            <div class="float-right mb-3">
+                              <button [routerLink]="['/Kayak/KayakType']" class="btn btn-primary mr-3">Cancelar</button>
+                              <button type="submit" class="btn btn-primary">{{OptionBtn == false ? "Guardar" : "Actualizar"}}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  
+
+

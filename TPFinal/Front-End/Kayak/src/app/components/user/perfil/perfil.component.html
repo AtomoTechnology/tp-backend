@@ -1,0 +1,367 @@
+<div class="container">
+    <div class="main-body">    
+          <div class="row gutters-sm">
+
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <img src="{{profilphoto}}" alt="Admin" class="rounded-circle" width="150">
+                    <div class="mt-3">
+                      <h4>{{user?.firstName}} -  {{user?.lastName}}</h4>
+                      <p class="text-secondary mb-1">Puesto</p>
+                      <p class="text-secondary mb-1">{{profiluser?.title}}</p>
+                      <p class="text-muted font-size-sm">Enpresas</p>
+                      <p class="text-muted font-size-sm">{{profiluser?.workplace}}</p>
+                      <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="ActionPerfil()">{{isPerfilCreate === true ? "Crear perfil" : "Actualizar perfil"}}</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card mt-3">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe mr-2 icon-inline"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>Website</h6>
+                    <span class="text-secondary">{{profiluser?.website}}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github mr-2 icon-inline"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>Github</h6>
+                    <span class="text-secondary">{{profiluser?.gitHub}}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter mr-2 icon-inline text-info"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>Twitter</h6>
+                    <span class="text-secondary">{{profiluser?.twitter}}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram mr-2 icon-inline text-danger"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>Instagram</h6>
+                    <span class="text-secondary">{{profiluser?.instagram}}</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <h6 class="mb-0"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook mr-2 icon-inline text-primary"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>Facebook</h6>
+                    <span class="text-secondary">{{profiluser?.facebook}}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Nombre Completo</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{user?.firstName}} -  {{user?.lastName}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{user?.mail}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Teléfono</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{user?.phone}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Dirección</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{user?.address}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <a class="btn btn-info " target="__blank" data-toggle="modal" data-target="#exampleModal" (click)="ActionUpdateUser()">Editar usuario</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row gutters-sm">
+                <div class="col-sm-12 mb-6">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="ActionKnowlage(0)">Agregar Conocimiento</button>
+                  <div class="card h-100  overflow-auto" style="height: 35vh!important;">
+
+                    <div class="card-body" *ngFor="let kown of kownlageuser">
+                      <small>{{kown?.name}}</small>
+                      <div class="row col-md-12 col-sm-12">
+                        <div class="progress col-md-10 col-sm-12 mb-3  p-0">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: {{kown?.nivel}}%" aria-valuenow="{{kown?.nivel}}" aria-valuemin="0" aria-valuemax="100"></div>                                               
+                        </div>
+                        <div class="col-md-2 col-sm-12 mb-3" style="margin-top: -2.1%;">
+                          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning  float-right" (click)="DeleteKnowlage(kown.id)"></button>
+                          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2  float-right" data-toggle="modal" data-target="#exampleModal" (click)="ActionKnowlage(kown.id)"></button>
+                        </div> 
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{titleModal}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row text-white">
+              <div class="col-xl-10 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form">
+                <div class="px-4">
+                  <!--Start user-->
+                  <form action="" class="justify-content-center" *ngIf="actionbtn =='user'"  [formGroup]="browserForm" (ngSubmit)="UpdateUser()">
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="inputfirstName">Nombre</label>
+                        <input type="text" class="form-control" id="inputfirstName" placeholder="Nombre" name="firstName"
+                        formControlName="firstName"  [class]="isValidField('firstName')">
+                        <div class="invalid-feedback">
+                          <span *ngIf="browserForm.get('firstName').errors?.required">
+                              Debe ingresar el nombre
+                          </span>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="inputlastName">Apellido</label>
+                        <input type="text" class="form-control" id="inputlastName" placeholder="Apellido" name="lastName"
+                        formControlName="lastName"  [class]="isValidField('lastName')">
+                        <div class="invalid-feedback">
+                          <span *ngIf="browserForm.get('lastName').errors?.required">
+                              Debe ingresar el apellido
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="idDocumentType">Tipo de documento</label>
+                        <select formControlName="idDocumentType"  [class]="isValidField('idDocumentType')" class="form-control" id="idDocumentType">
+                          <option value="">Seleccionar el tipo de documento</option>
+                          <option value="{{doc.id}}" *ngFor ="let doc of doclist"  name="idDocumentType">{{doc.name}}</option>
+                        </select>
+                        <div class="invalid-feedback">
+                          <span *ngIf="browserForm.get('idDocumentType').errors?.required">
+                              Debe seleccionar el tipo de documento
+                          </span>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="inputdocnumber">Numero de documento</label>                              
+                        <input type="text" class="form-control" id="inputdocnumber" placeholder="Numero de documento" name="docNumber"
+                        formControlName="docNumber"  [class]="isValidField('docNumber')">
+                        <div class="invalid-feedback">
+                          <span *ngIf="browserForm.get('docNumber').errors?.required">
+                              Debe ingresar el numero de documento
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputphone">Telefono</label>
+                          <input type="text" class="form-control" id="inputphone" placeholder="Telefono" name="phone"
+                          formControlName="phone"  [class]="isValidField('phone')">
+                          <div class="invalid-feedback">
+                            <span *ngIf="browserForm.get('phone').errors?.required">
+                                Debe ingresar el Telefono
+                            </span>
+                          </div>
+                        </div>
+                      <div class="form-group col-md-6">
+                        <label for="inputaddress">Domicilio</label>
+                        <input type="text" class="form-control" id="inputaddress"  placeholder="Domicilio" name="address"
+                        formControlName="address"  [class]="isValidField('address')">
+                        <div class="invalid-feedback">
+                          <span *ngIf="browserForm.get('address').errors?.required">
+                              Debe ingresar el Domicilio
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Actualizar usuario</button>
+                  </div>
+                  </form> 
+                  <!--End user-->  
+
+                  <!--Start profil-->
+                  <form action="" class="justify-content-center" *ngIf="actionbtn =='perfil'"  [formGroup]="perfilForm" (ngSubmit)="CreateOrUpdatePerfil()">
+                    <div class="form-row">
+                      <div class="form-group col-md-4 float-left">
+                        <h2  class="float-left"><strong>Usuario: </strong>{{userPerfilName}}</h2>                                            
+                      </div>
+                      <div class="form-group col-md-6 row">
+                        <div class="col-md-6">
+                          <img src="{{profilphoto}}" alt="Admin" class="rounded-circle" width="150">
+                        </div>
+                        <div class="col-md-6 justify-content-center align-items-center">
+                          <label class="btn btn-primary col-auto"  data-toggle="modal" data-target="#photoperfil">Seleccionar foto de perfil</label>                                              
+                        </div>                                           
+                      </div>
+                    </div>
+
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="inputtitle">Puesto</label>
+                        <input type="text" class="form-control" id="inputtitle" placeholder="Puesto" name="title"
+                        formControlName="title"   [class]="isValidFieldProfil('title')">
+                        <div class="invalid-feedback">
+                          <span *ngIf="perfilForm.get('title').errors?.required">
+                              Debe ingresar el puesto
+                          </span>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="inputworkplace">Empresa</label>
+                        <input type="text" class="form-control" id="inputworkplace" placeholder="Empresa" name="workplace"
+                        formControlName="workplace" >
+                      </div>
+                    </div>  
+                    
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="inputfacebook">Facebook</label>
+                        <input type="text" class="form-control" id="inputfacebook" placeholder="facebook" name="facebook"
+                        formControlName="facebook">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="inputgitHub">GitHub</label>
+                        <input type="text" class="form-control" id="inputgitHub" placeholder="gitHub" name="gitHub"
+                        formControlName="gitHub" >
+                      </div>
+                    </div>  
+                    
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="inputtitle">Instagram</label>
+                        <input type="text" class="form-control" id="inputinstagram" placeholder="instagram" name="instagram"
+                        formControlName="instagram">
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="inputtwitter">Twitter</label>
+                        <input type="text" class="form-control" id="inputtwitter" placeholder="twitter" name="twitter"
+                        formControlName="twitter" >
+                      </div>
+                    </div> 
+                    
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="inputtitle">Website</label>
+                        <input type="text" class="form-control" id="inputwebsite" placeholder="website" name="website"
+                        formControlName="website">
+                      </div>
+                    </div>  
+                    
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">{{isPerfilCreate === true ? "Crear perfil" : "Actualizar perfil"}}</button>                                          
+                  </div>
+                  </form> 
+                  <!--End profil-->                                      
+
+                  <!--Start knowlage-->
+                  <form action="" class="justify-content-center" *ngIf="actionbtn =='knowlage'"  [formGroup]="knowlageForm" (ngSubmit)="CreateOrUpdateKnowlage()">
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="inputknowlagename">Nombre actividad</label>
+                        <input type="text" class="form-control" id="inputknowlagename" placeholder="Nombre del activada" name="name"
+                        formControlName="name"  [class]="isValidFieldKnowlage('name')">
+                        <div class="invalid-feedback">
+                          <span *ngIf="knowlageForm.get('name').errors?.required">
+                              Debe ingresar el nombre de la actividad
+                          </span>
+                        </div>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="form-label col-md-12" for="inputknowlagenivel">Nivel de conocimiento({{porcent}} %)</label>
+                        <div class="range">
+                          <input type="range" class="form-range col-md-12" min="0" max="100" id="inputknowlagenivel" placeholder="Nivel de conocimiento de la activadad" name="nivel"
+                        formControlName="nivel"  [class]="isValidFieldKnowlage('nivel')" (mouseleave)="ShowPorcent($event)">
+                        </div>                                                
+                        <div class="invalid-feedback">
+                          <span *ngIf="knowlageForm.get('nivel').errors?.required">
+                              Debe ingresar el nombre de la actividad
+                          </span>
+                        </div>                                        
+                      </div>                                        
+                    </div>  
+                    
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label for="inputknowlagedescription">Descripción</label>
+                        <textarea class="form-control" rows="7"
+                        formControlName="description"  id="inputknowlagedescription" name="description" placeholder="Descripción"></textarea>
+                      </div>
+                    </div>                                          
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">{{isKnowlageCreate === true ? "Agregar conocimiento" : "Actualizar conocimiento"}}</button>                                          
+                  </div>
+                  </form> 
+                  <!--End knowlage-->
+
+                </div>
+              </div>
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>
+
+<!-- Modal foto-->
+<div class="modal fade" id="photoperfil" tabindex="-1" aria-labelledby="photoperfilLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="photoperfilLabel">Seleccionar la foto de la materia </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row  m-0  row-cols-1 row-cols-md-3   overflow-auto"  style="height: 70vh;">
+          <div class="col mb-4" *ngFor="let photo of photolist" (click)="SelectPhoto(photo)" style="cursor:pointer">
+            <div class="card h-100">
+              <img src={{photo.url}} class="card-img-top" alt=Avatar-{{photo.id}} width="200" height="200">
+              <div class="card-body h-50">
+                <h5 class="card-title"><strong>Nombre: Avatar-{{photo.id}}</strong></h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>                                        
+        <div class="modal-footer">
+        <input type="file" class="form-control" id="inputfile" name="img"
+          formControlName="img" placeholder="Nombre" hidden (change)="onFileChanged($event)">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <label for="inputfile" class="btn btn-primary" >Examinar photo</label>  
+      </div>
+    </div>
+  </div>
+</div>

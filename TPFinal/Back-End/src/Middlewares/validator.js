@@ -1,8 +1,15 @@
 import mysqlconnection from '../DB/db'; 
+require('dotenv').config(); 
+
 const role = require('../DB/models/role');
 const auth = require('../DB/models/auth');
 const user = require('../DB/models/user');
+const location = require('../DB/models/location');
+const hanger = require('../DB/models/hanger');
 const documenttype = require('../DB/models/documenttype');
+
+require('dotenv').config();
+import * as encripto from '../Helpers/Cryptographies';
 
 export const checkUserNameNoneRepeat = (req, res, next) => {
     // console.log("entrando checkUserNameNoneRepeat con userName: ",req.body.userName);
@@ -14,163 +21,198 @@ export const checkUserNameNoneRepeat = (req, res, next) => {
     })
     .then( result =>{
         if (result.length > 0) {
-            return res.status(404).json({
-                error: "error",
+            return res.json({
+                status:  parseInt(process.env.error_code),
+                title: 'Error validar usuario',
                 message: "Nombre usuario existe"
             });
         }
         next();
     });
-    // mysqlconnection.query('SELECT * FROM accounts where userName =?',[req.body.userName], (err, rows, fields) =>{         
-    //     if(rows.length > 0){
-    //         return res.status(401).json({
-    //             error:"error",
-    //             message:"Nombre usuario existe"
-    //         });  
-    //     }
-    //     else{
-    //         next();
-    //     }
-    // });  
 }
 
 export const checkLocationNoneRepeat = (req, res, next) => {
-    mysqlconnection.query('SELECT * FROM locations where name =?',[req.body.name], (err, rows, fields) =>{         
-        if(rows.length > 0){
-            return res.status(401).json({
-                error:"error",
-                message:"Esta ubicación ya existio"
-            });  
+    location.findAll({
+        attributes: ['id', 'name', 'state'],
+        where: {
+            name: req.body.name
         }
-        else{
-            next();
+    })
+    .then( result =>{
+        if (result.length > 0) {
+            return res.json({
+                status:  parseInt(process.env.error_code),
+                title: 'Error ubicación parche',
+                message: "Esta ubicación ya existio"
+            });
         }
-    });  
+        next();
+    }); 
+}
+
+export const checkNroHangerNoneRepeat = (req, res, next) => {
+    hanger.findAll({
+        attributes: ['id', 'nrohanger', 'state'],
+        where: {
+            nrohanger: req.body.nrohanger
+        }
+    })
+    .then( result =>{
+        if (result.length > 0) {
+            return res.json({
+                status:  parseInt(process.env.error_code),
+                title: 'Error validar parche',
+                message: "Este nro de parche ya existio"
+            });
+        }
+        next();
+    }); 
 }
 
 export const checkDocumentNoneRepeat = (req, res, next) => {
-    mysqlconnection.query('SELECT * FROM accounts where name =?',[req.body.name], (err, rows, fields) =>{         
-        if(rows.length > 0){
-            return res.status(400).json({
-                error:"error",
-                message:"Este documento ya existio"
-            });  
+    documenttype.findAll({
+        attributes: ['id', 'name', 'state'],
+        where: {
+            name: req.body.name
         }
-        else{
-            next();
+    })
+    .then( result =>{
+        if (result.length > 0) {
+            return res.json({
+                status:  parseInt(process.env.error_code),
+                title: 'Error validar documento',
+                message: "Este documento ya existio"
+            });
         }
+        next();
     });  
 }
 
 export const checkRoleExisted = (req, res, next) => {
     
-    // console.log("entrando checkRoleExisted con id: ",req.idRole);
-    if(req.idRole){
-        role.findAll({
-            attributes: ['id', 'name', 'description', 'state'],
-            where: {
-                state: 1,
-                id: req.idRole
-            }
-        }).then( result =>{
-            if(result.length === 0){
-                return res.status(401).json({
-                    error:"error",
-                    message:"Rol no existe"
-                });   
-            }
-            else{
-                next();
-            }
-        }); 
-    }
-    else{
-        return res.status(401).json({
-            error:"error",
-            message:"Rol requiere"
-        }); 
-    }
-}
-export const checkRoleUpdateExisted = (req, res, next) => {
-    if(req.body.idRole){
-        mysqlconnection.query('SELECT * FROM roles WHERE state =?  and id !=? name =?',[1, req.idRole, req.role], (err, rows, fields) =>{  
-            if(rows.length === 0){
-                return res.status(400).json({
-                    error:"error",
-                    message:"Rol no existe"
-                });   
-            }
-            else{
-                next();
-            }
-        });  
-    }
-    else{
-        return res.status(401).json({
-            error:"error",
-            message:"Rol requiere"
-        }); 
-    }
-}
-export const checkDocuUpdateExisted = (req, res, next) => {
-    
-    mysqlconnection.query('SELECT * FROM documenttypes WHERE state =?  and id !=? and name =?',[1, req.body.id, req.body.name], (err, rows, fields) =>{     
-        if(!err){             
-            if(rows.length > 0){
-                return res.status(401).json({
-                    error:"error",
-                    message:"Hay documento ya con ese nombre"
-                });   
-            }
-            else{
-                next();
-            }
+    role.findAll({
+        attributes: ['id', 'name', 'description', 'state'],
+        where: {
+            state: 1,
+            id: req.body.idRole
+        }
+    }).then( result =>{
+        if(result.length === 0){
+            return res.json({
+                status:  parseInt(process.env.error_code),
+                title: 'Error validar rol',
+                message:"Rol no existe"
+            });   
         }
         else{
-            return res.status(401).json({
-                error:"error",
-                message:"Rol requiere"
-            }); 
+            next();
         }
-    });  
-    
+    })
+    .catch((err) =>{
+        return res.json({
+            status:  parseInt(process.env.error_code),
+            title: 'Error validar rol',
+            message:"Rol requiere"
+        }); 
+    }); 
 }
 
-
+export const checkRoleUpdateExisted = (req, res, next) => {
+    role.findAll({
+        attributes: ['id', 'name', 'description', 'state'],
+        where: {
+            state: 1,
+            id: !req.body.idRole,
+            name: req.role
+        }
+    }).then( result =>{
+        if(result.length > 0){
+            return res.json({
+                status:  parseInt(process.env.error_code),
+                title: 'Error validar rol',
+                message:"Hay un rol con ese nombre"
+            });   
+        }
+        else{
+            next();
+        }
+    })
+    .catch((err) =>{
+        return res.json({
+            status:  parseInt(process.env.error_code),
+            title: 'Error validar rol',
+            message:"Rol requiere"
+        }); 
+    });   
+}
+export const checkDocuUpdateExisted = (req, res, next) => {
+    documenttype.findAll({
+        attributes: ['id', 'name', 'description', 'state'],
+        where: {
+            state: 1,
+            id: !req.body.idRole,
+            name: req.role
+        }
+    }).then( result =>{
+        if(result.length > 0){
+            return res.json({
+                status:  parseInt(process.env.error_code),
+                title: 'Error validar documento',
+                message:"Hay documento ya con ese nombre"
+            });   
+        }
+        else{
+            next();
+        }
+    })
+    .catch((err) =>{
+        return res.json({
+            status:  parseInt(process.env.error_code),
+            title: 'Error validar documento',
+            message:"Documento requiere"
+        }); 
+    });     
+}
 
 export const checkCorrectChangePass = (req, res, next) => {    
-    const { userName, userPass, olduserPass} = req.body;
-    mysqlconnection.query('SELECT * FROM accounts where userName =?',[userName], (err, rows, fields) =>{   
-        if(!err){
-            const userfound = rows[0];
-            if(!userfound)
-            {
-                return res.status(401).json({
+    const { userName, userPass, confirmPass, newUserPass} = req.body;
+    auth.findOne({
+        attributes: ['id', 'userName','userPass', 'idUser', 'idRole', 'state'],
+        where: {
+            userName: userName,
+            state: 1
+        }
+    })
+    .then( result =>{
+        encripto.compare(userPass,result.userPass).then((response)=>
+        {
+            if(!response){
+                return res.json({
+                    status: parseInt(process.env.server_notfount_code),
                     error:"No encontrado",                    
-                    message:"Usuario incorrecto"
+                    message:"Contraseña actual es diferente de lo que se ingreso"
+                });
+            }
+            else if(newUserPass !== confirmPass){
+                return res.json({
+                    status: parseInt(process.env.server_notfount_code),
+                    error:"No encontrado",                    
+                    message:"Las nuevas contraseña deben ser iguales"
                 });
             }
             else{
-                const pass = encripto.compare(olduserPass,userfound.userPass);
-                if(!pass){
-                    return res.status(401).json({
-                        error:"No encontrado",                    
-                        message:"contraseña actual incorrecta"
-                    });
-                }
-                else{
-                    next();
-                }
+                console.log("Ingreso en el next then del metodo checkCorrectChangePass ");
+                next();
             }
-        }  
-        else{
-            return res.status(401).json({
-                error:"Error",                    
-                message:"No se pude establecer la conexion"
-            });
-        }    
-        
-    });  
+        })
+    })
+    .catch((err) =>{
+        return res.json({
+            status: parseInt(process.env.server_notfount_code),
+            error:"Error",                    
+            message:"No se pude establecer la conexion"
+        });
+    });   
 }
 
 export const isUserValid = (req, res, next) =>{
@@ -219,7 +261,6 @@ export const NumDocumentNoneRepeat = (req, res, next) =>{
             docNumber: req.body.docNumber
         }
     }).then( result =>{
-        // console.log("entrando NumDocumentNoneRepeat con docNumber: ",result);
         if(result.length > 0){
             return res.json({
                 code: 401, 
@@ -296,7 +337,7 @@ export const isPassValid = (req, res, next) =>{
 export const IsmailValid = (req, res, next) => {
     const {mail} = req.body;
     const isEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    // console.log(req.body);
+    
     if(!isEmail.test(mail)){
         return res.status(401).json({
             error:"formato incorrecto",                    

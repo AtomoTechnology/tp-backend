@@ -1,6 +1,3 @@
-<!-- <app-navbar (Logout)="Logout($event)"  [menunav]="menunav">
-</app-navbar> -->
-
 <div class="container">
   <p-table #dt [value]="userlist"  dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
   [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
@@ -20,38 +17,29 @@
   </ng-template>
   <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="id">
+        <th>
           <div class="p-d-flex p-jc-between p-ai-center">
               Codigo
-              <p-sortIcon field="id"></p-sortIcon>
           </div>
         </th>
-          <th pSortableColumn="name">
+          <th>
               <div class="p-d-flex p-jc-between p-ai-center">
                   Nombre
-                  <p-sortIcon field="name"></p-sortIcon>
-                  <p-columnFilter type="text" field="name" display="menu" class="p-ml-auto"></p-columnFilter>
               </div>
           </th>
-          <th pSortableColumn="description">
+          <th >
               <div class="p-d-flex p-jc-between p-ai-center">
                   Descripcion
-                  <p-sortIcon field="description"></p-sortIcon>
-                  <p-columnFilter type="text" field="description" display="menu" class="p-ml-auto"></p-columnFilter>
               </div>
           </th>
-          <th pSortableColumn="phone">
+          <th >
               <div class="p-d-flex p-jc-between p-ai-center">
                   Telefono
-                  <p-sortIcon field="phone"></p-sortIcon>
-                  <p-columnFilter type="text" field="phone" display="menu" class="p-ml-auto"></p-columnFilter>
               </div>
           </th>
-          <th pSortableColumn="creationDate">
+          <th >
               <div class="p-d-flex p-jc-between p-ai-center">
                   Fecha de alta
-                  <p-sortIcon field="creationDate"></p-sortIcon>
-                  <p-columnFilter type="date" field="creationDate" display="menu" class="p-ml-auto"></p-columnFilter>
               </div>
           </th>
           <th>

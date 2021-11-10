@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import config from '../config/config';
-import mysqlconnection from '../DB/db';
+require('dotenv').config();
+
 const role = require('../DB/models/role');
 const auth = require('../DB/models/auth');
 
@@ -19,17 +20,15 @@ export const verifyToken = async (req, res, next) => {
         req.id = decode.idaccount;
         req.role = decode.role;
         req.idRole = decode.idRole;
-
-        // console.log("entrando verifyToken con id: ",req.id);
+        
         auth.findOne({
-            attributes: ['id', 'userName', 'idUser', 'state'],
+            attributes: ['id', 'userName', 'userId', 'state'],
             where: {
                 state: 1,
                 id: req.id
             }
         })
         .then( result =>{            
-        // console.log("entrando verifyToken con result: ",result);
             if (result == null) {
                 return res.status(404).json({
                     error: "error",
@@ -48,7 +47,6 @@ export const verifyToken = async (req, res, next) => {
 
 export const isAdmin = async (req, res, next) => {
     try {        
-        // console.log("entrando isAdmin con role: ",req.role);
         role.findOne({
             attributes: ['id', 'name', 'description', 'state'],
             where: {
@@ -56,7 +54,6 @@ export const isAdmin = async (req, res, next) => {
                 name: req.role
             }
         }).then(result => {
-            // console.log("entrando then isAdmin con role: ",result);
             if (result != null) {
                 if (result.dataValues.name.toLowerCase() === ("admin").toLowerCase()) {
                     next();

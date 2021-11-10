@@ -17,7 +17,10 @@ import { TableModule } from 'primeng/table';
 import {ReactiveFormsModule} from '@angular/forms';
 import { FormsModule} from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
-import { LocationComponent } from 'src/app/location/location.component';
+import { LocationComponent } from 'src/app/components/location/location.component';
+import { HangerComponent } from '../../components/hanger/hanger.component';
+import { KayaktypeComponent } from '../../components/kayaks/kayaktype/kayaktype.component';
+import { ActionkayaktypeComponent } from '../../components/kayaks/kayaktype/actionkayaktype/actionkayaktype.component';
 
 
 @NgModule({
@@ -29,7 +32,10 @@ import { LocationComponent } from 'src/app/location/location.component';
     ParcheComponent,
     ActionparcheComponent,
     PartnerComponent,
-    LocationComponent
+    LocationComponent,
+    HangerComponent,
+    KayaktypeComponent,
+    ActionkayaktypeComponent
   ],
   imports: [
     CommonModule,

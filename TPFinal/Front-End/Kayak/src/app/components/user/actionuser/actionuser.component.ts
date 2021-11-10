@@ -5,10 +5,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentType } from '../../../classes/document';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Role } from '../../../classes/role';
-import { MessageService } from '../../../services/message/message.service';
 
 import { GenericService } from '../../../services/generic/generic.service';
 import { ApiController } from '../../../apicontroller/api.controller';
+import { MessageService } from 'src/app/services/message/message.service';
 
 declare var $: any;
 
@@ -62,6 +62,7 @@ export class ActionuserComponent implements OnInit {
 
   GetById(id){
     this.genericService.GetById(id, this.ctrl.user).subscribe(result =>{
+      debugger;
       this.user = JSON.parse(JSON.stringify(result));
       this.browserForm.patchValue(this.user);
     })
@@ -117,7 +118,7 @@ export class ActionuserComponent implements OnInit {
     debugger;
     this.genericService.Post(this.browserForm.value, this.ctrl.user).subscribe((data:any) =>{
       debugger;
-      if(data.status === 201){
+      if(data.status === 200){
         setTimeout(()=>{
           this.router.navigate(['/User']);
         }, 5000);
@@ -138,7 +139,7 @@ export class ActionuserComponent implements OnInit {
     debugger;
     this.genericService.Put(this.browserForm.value, this.ctrl.user).subscribe((data:any) =>{
       debugger;
-      if(data.status === 201){
+      if(data.status === 200){
         setTimeout(()=>{
           this.router.navigate(['/User']);
         }, 5000);

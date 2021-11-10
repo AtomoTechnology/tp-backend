@@ -9,15 +9,7 @@ export const GetALl = (req, res) =>{
         }
     }).then(result =>{
         res.json(result);
-    }) 
-    // mysqlconnection.query('SELECT * FROM documenttypes where state = 1 ORDER BY id DESC',(err, rows, fields) =>{
-    //     if(!err){
-    //         res.json(rows);
-    //     }
-    //     else{
-    //         res.json(err);
-    //     }
-    // });    
+    })    
 }
 export const GetById = (req, res) =>{    
     //     const { id } = req.params;

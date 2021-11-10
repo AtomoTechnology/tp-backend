@@ -4,14 +4,14 @@ import * as usercontroller from '../Controllers/user.controller';
 const router = Router();
 
 //Get All user
-router.get('/',usercontroller.GetAll);
+router.get('/',[authjwt.verifyToken],usercontroller.GetAll);
 
 //Get by id
-router.get('/:id', usercontroller.GetById);
+router.get('/:id',[authjwt.verifyToken], usercontroller.GetById);
 
 //Create
 router.post('/',[
-    authjwt.verifyToken,validator.checkUserNameNoneRepeat,
+    validator.checkUserNameNoneRepeat,
     validator.checkRoleExisted,validator.isUserValid,validator.isPassValid,
     validator.IsmailValid, validator.EmailNoneRepeat, validator.NumDocumentNoneRepeat,
     validator.PhoneNoneRepeat

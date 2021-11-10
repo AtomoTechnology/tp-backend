@@ -4,4 +4,7 @@ export class ApiController{
     auth:string ='auth';
     documenttype:string ='documenttypes';
     role:string ='roles';
+    hanger:string ='hangers';
+    kayak:string ='kayaks';
+    kayaktype:string ='kayaktypes';
 }

@@ -1,77 +1,98 @@
-import mysqlconnection from '../DB/db'; 
-export const getLocation = (req, res) =>{
-    mysqlconnection.query('SELECT * FROM locations where state = 1 ORDER BY id DESC',(err, rows, fields) =>{
-        if(!err){
-            res.json(rows);
+const location =  require('../DB/models/location');
+require('dotenv').config(); 
+
+export const GetAll = (req, res) =>{
+    location.findAll({
+        attributes: ['id', 'name', 'description', 'state'],
+        where: {
+            state: 1
         }
-        else{
-            res.json(err);
-        }
+    }).then(result => {
+        res.json(result);
     });    
 }
-export const getLocationById = (req, res) =>{    
-        const { id } = req.params;
-    mysqlconnection.query('SELECT * FROM locations where state = 1 and id =?',[id], (err, rows, fields) =>{
-        if(!err){
-            res.json(rows[0]);
+
+export const GetById = (req, res) =>{    
+    const { id } = req.params;
+    location.findOne({
+        attributes: ['id', 'name', 'description', 'state'],
+        where: {
+            id: id,
+            state: 1
         }
-        else{
-            res.json(err);
-        }
-    });    
+    }).then(result => {
+        res.json(result);
+    });      
 }
-export const createLocation = (req, res) =>{
+
+export const Post = (req, res) =>{
+
     const { name, description} = req.body;
     const tiempoTranscurrido = Date.now();
     const today = new Date(tiempoTranscurrido);
-    const query = "INSERT INTO locations (name, description, creationDate, state) VALUES ?";
-    var values = [[name, description, today, 1]];
-    
-    mysqlconnection.query(query,[values], (err, rows, fields) =>{
-        if(!err){          
-            return res.json({
-                status: 201,
-                message:'La ubicación fue guarda con exito'
-            });
-        }
-        else{
-            return res.json(err);
-        }
+    location.create({
+        name: name,
+        description: description,
+        creationDate: today,
+        state: 1
+    }).then(p => {          
+        return res.json({
+            status: parseInt(process.env.success_code),
+            title: 'Crear ubicacion',
+            message:'La ubicación fue guarda con exito'
+        });
+    })
+    .catch((err) =>{
+        return res.json({
+            status:  parseInt(process.env.error_code),
+            title: 'Error crear ubicación',
+            message:'La ubicación no fue guardada ',err
+        });
     });
    
 }
-export const updateLocation = (req, res) =>{
+export const Put = (req, res) =>{
+
     const { name, description } = req.body;
-    const { id } = req.params;   
-    mysqlconnection.query(`UPDATE locations SET name = '${name}',description = '${description}' WHERE id =${[id]}`, (err, rows, fields) =>{
-        if(!err){
-            res.json({
-                status: 201,
-                message:'La ubicación fue modificada con exito'
-            });
+    const { id } = req.params;
+    location.update({
+        name: name,
+        description: description
+    }, {
+        where: {
+            id: id,
         }
-        else{
-            res.json({
-                status: 301,
-                message:'La ubicación no fue modificada con exito'
-            });
-        }
+    }).then((response) =>{ 
+        return res.json({
+            status:  parseInt(process.env.success_code),
+            title: 'Actualizar ubicación',
+            message:'La ubicación fue modificada con exito'
+        });
+    })
+    .catch((err) =>{
+        return res.json({
+            status:  parseInt(process.env.error_code),
+            title: 'Error actualizar ubicación',
+            message:'La ubicación no fue modificada con exito ',err
+        });
     });
 }
-export const deleteLocation = (req, res) =>{  
+export const Delete = (req, res) =>{  
     const { id } = req.params;
-    mysqlconnection.query('UPDATE locations SET state = 2 WHERE id =?',[id], (err, rows, fields) =>{
-        if(!err){
-            res.json({
-                status: 201,
-                message:'La ubicación fue eliminada con exito'
-            });
-        }
-        else{
-            res.json({
-                status: 301,
-                message:'La ubicación no fue eliminada con exito'
-            });
-        }
+    location.update({state: 2},
+        {where: {id: id}
+    }).then((response) =>{ 
+        return res.json({
+            status: parseInt(process.env.success_code),
+            title: 'Eliminar ubicación',
+            message:'La ubicación fue eliminada con exito'
+        });
+    })
+    .catch((err) =>{        
+        return res.json({
+            status:  parseInt(process.env.error_code),
+            title: 'Error eliminar ubicación',
+            message:'La ubicación no fue eliminada ',err
+        });
     });
 }
