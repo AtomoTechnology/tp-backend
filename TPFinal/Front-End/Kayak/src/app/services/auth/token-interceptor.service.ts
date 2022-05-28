@@ -17,7 +17,6 @@ export class TokenInterceptorService implements HttpInterceptor {
     }
 
     return next.handle(request).pipe(catchError (error => {
-      debugger;
       if(error instanceof HttpErrorResponse && error.statusText !== "Unauthorized" && error.status === 401){
         return this.handle401Error(request, next);
       }
@@ -28,7 +27,6 @@ export class TokenInterceptorService implements HttpInterceptor {
   }
 
   private addToken(request: HttpRequest<any>, token: string) {
-    debugger;
     return request.clone({
       setHeaders: {
         'Authorization': `Bearer ${token}`
@@ -37,7 +35,6 @@ export class TokenInterceptorService implements HttpInterceptor {
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
-    debugger;
     return this.refreshTokenSubject.pipe(
       filter(token => token != null),
       take(1),

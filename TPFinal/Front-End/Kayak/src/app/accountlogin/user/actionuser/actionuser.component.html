@@ -1,0 +1,160 @@
+<section id="cover" class="min-vh-100">
+    <div id="cover-caption">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-10 col-lg-6 col-md-8 col-sm-10 mx-auto form">
+                    <h1 class="display-4 py-2 text-truncate  text-center">{{Option}}</h1>
+                    <div class="px-4">
+                        <form action="" class="justify-content-center"  [formGroup]="browserForm" (ngSubmit)="Create()">
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <label for="inputfirstName"  class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="inputfirstName" placeholder="Nombre" name="firstName"
+                                formControlName="firstName"  [class]="isValidField('firstName')">
+                                <div class="invalid-feedback">
+                                  <span *ngIf="browserForm.get('firstName').errors?.required">
+                                      Debe ingresar el nombre
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                <label for="inputlastName">Apellido</label>
+                                <input type="text" class="form-control" id="inputlastName" placeholder="Apellido" name="lastName"
+                                formControlName="lastName"  [class]="isValidField('lastName')">
+                                <div class="invalid-feedback">
+                                  <span *ngIf="browserForm.get('lastName').errors?.required">
+                                      Debe ingresar el apellido
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+  
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <label for="documentTypeId">Tipo de documento</label>
+                                <select  formControlName="documentTypeId"  [class]="isValidField('documentTypeId')" class="form-control" id="documentTypeId">
+                                  <option value="">Seleccionar el tipo de documento</option>
+                                  <option value="{{doc.id}}" *ngFor ="let doc of doclist"  name="documentTypeId">{{doc.name}}</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                  <span *ngIf="browserForm.get('documentTypeId').errors?.required">
+                                      Debe seleccionar el tipo de documento
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                <label for="inputdocnumber">Numero de documento</label>                              
+                                <input type="text" class="form-control" id="inputdocnumber" placeholder="Numero de documento" name="docNumber"
+                                formControlName="docNumber"  [class]="isValidField('docNumber')">
+                                <div class="invalid-feedback">
+                                  <span *ngIf="browserForm.get('docNumber').errors?.required">
+                                      Debe ingresar el numero de documento
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+  
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <label for="inputEmail">Email</label>
+                                <input type="email" class="form-control" id="inputEmail" placeholder="Correo electronico" name="mail"
+                                formControlName="mail"  [class]="isValidField('mail')">
+                                <div class="invalid-feedback">
+                                  <span *ngIf="browserForm.get('mail').errors?.required">
+                                      Debe ingresar el correo electronico
+                                  </span>
+                                  <span *ngIf="browserForm.get('mail').errors?.pattern">
+                                    Correo electronico invalido
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                <label for="inputaddress">Domicilio</label>
+                                <input type="text" class="form-control" id="inputaddress"  placeholder="Domicilio" name="address"
+                                formControlName="address"  [class]="isValidField('address')">
+                                <div class="invalid-feedback">
+                                  <span *ngIf="browserForm.get('address').errors?.required">
+                                      Debe ingresar el Domicilio
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+  
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <label for="inputphone">Telefono</label>
+                                <input type="text" class="form-control" id="inputphone" placeholder="Telefono" name="phone"
+                                formControlName="phone"  [class]="isValidField('phone')">
+                                <div class="invalid-feedback">
+                                  <span *ngIf="browserForm.get('phone').errors?.required">
+                                      Debe ingresar el Telefono
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="form-group col-md-6" *ngIf="!OptionBtn">
+                                <label for="inputRole">Acceso</label>
+                                <select  formControlName="roleId"  [class]="isValidField('roleId')" class="form-control" id="inputRole">
+                                  <option value="">Seleccionar el role</option>
+                                  <option value="{{role.id}}" *ngFor ="let role of rolelist"  name="roleId">{{role.name}}</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                  <span *ngIf="browserForm.get('roleId').errors?.required">
+                                      Debe seleccionar un role
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+  
+                            <div class="form-row" *ngIf="!OptionBtn">
+                              <div class="form-group col-md-6">
+                                <label for="inputUserName">Nombre usuario</label>
+                                <input type="text" class="form-control col-md-11" id="inputUserName" name="userName"
+                                formControlName="userName"   [class]="isValidField('userName')" placeholder="Nombre usuario">
+                                <i class="pi pi-info-circle info" pTooltip="El usuario debe tener como minimo 6 caracteres y como maximo 50 caracteres"></i>
+                                <div class="invalid-feedback">                                
+                                  <span *ngIf="browserForm.get('userName').errors?.required">
+                                      ingresa el nombre usuario
+                                  </span>
+                                  <span *ngIf="browserForm.get('userName').errors?.minlength">
+                                    El nombre no puede ser menos que 6 carateres
+                                  </span>                              
+                                  <span *ngIf="browserForm.get('userName').errors?.maxlength">
+                                    El nombre no puede ser mayor que 50 carateres
+                                  </span>
+                                </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                <label for="inputUserPass">Contraseña usuario</label>
+                                <input type="password" class="form-control col-md-11" id="inputUserPass" placeholder="Contraseña usuario" name="userPass"
+                                formControlName="userPass"   [class]="isValidField('userPass')">                              
+                                <i class="pi pi-info-circle info" pTooltip="La contraseña debe contener al menos un numero[0-9], una letra en mayuscula[A-Z], una letra minuscula[a-z] y debe tener como minimo 6 caracteres y como maximo 50 caracteres"></i>
+                                <div class="invalid-feedback">                                
+                                  <span *ngIf="browserForm.get('userPass').errors?.required">
+                                      ingresa la contraseña del  usuario
+                                  </span>
+                                  <span *ngIf="browserForm.get('userPass').errors?.minlength">
+                                    La contraseña no puede ser menos que 6 carateres
+                                  </span>                              
+                                  <span *ngIf="browserForm.get('userPass').errors?.maxlength">
+                                    La contraseña no puede ser mayor que 50 carateres
+                                  </span>
+                                  <span *ngIf="browserForm.get('userPass').errors?.pattern">
+                                    La contraseña debe contener una letra mayuscula y una letra minuscula.
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+  
+                            <div class="float-right mb-3">
+                              <button [routerLink]="['/Browser/User']" class="btn btn-primary mr-3">Cancelar</button>
+                              <button type="submit" class="btn btn-primary">{{OptionBtn == false ? "Guardar" : "Actualizar"}}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+  
+

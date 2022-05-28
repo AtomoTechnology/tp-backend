@@ -1,8 +1,7 @@
 import * as encripto from '../Helpers/Cryptographies';
 import config from '../config/config';
 import jwt from 'jsonwebtoken';
-const account = require('../DB/models/account');
-import auth from '../DB/models/auth';
+import Account  from '../DB/models/account';
 import role from '../DB/models/role';
 require('dotenv').config();
 
@@ -11,9 +10,17 @@ const { QueryTypes } = require('sequelize');
 
 export const SignIn = (req, res) =>{ 
     const { userName, userPass} = req.body;  
-    auth.findAll({
+    Account.findOne({
         attributes: ['id', 'userId', 'roleId', 'userName','userPass'],
-        include: role ,
+        include:[
+            {
+                model: role, 
+                as: 'roleAcc',              
+                where:{
+                    state: 1
+                },
+                required: true
+            }] ,
         where: {
             state: 1,
             userName: userName
@@ -29,8 +36,7 @@ export const SignIn = (req, res) =>{
             });
         }
         else{
-            console.log("ROle include: ",account[0].dataValues.role.dataValues.name);
-            encripto.compare(userPass,account[0].dataValues.userPass).then((response)=>
+            encripto.compare(userPass,account.dataValues.userPass).then((response)=>
             {
                 if(!response){
                     return res.json({
@@ -44,15 +50,17 @@ export const SignIn = (req, res) =>{
                 { 
                     const token = jwt.sign(
                         {
-                            idaccount:account[0].dataValues.id, 
-                            role:account[0].dataValues.role.dataValues.name, 
-                            idRole:account[0].dataValues.roleId, 
-                            iduser:account[0].dataValues.userId
+                            idaccount:account.dataValues.id, 
+                            role:account.dataValues.roleAcc.dataValues.name, 
+                            idRole:account.dataValues.roleId, 
+                            iduser:account.dataValues.userId
                         },
                         config.SECRET,{
                             expiresIn:86400 // vence en un dia
                         }
                     );
+                    
+        console.log("itoken ",token);
                     return res.json({
                         status: parseInt(process.env.success_code),
                         token: token
@@ -64,7 +72,7 @@ export const SignIn = (req, res) =>{
 }
 
 export const GetAll = (req, res) => {
-    account.findAll({
+    Account.findAll({
         attributes: ['id', 'userName', 'userId', 'roleId', 'state'],
         where: {
             state: 1
@@ -81,7 +89,7 @@ export const GetById = (req, res) =>{
     const {
         id
     } = req.params;
-    account.findOne({
+    Account.findOne({
         attributes: ['id', 'userName', 'userId', 'roleId', 'state'],
         where: {
             id: id,
@@ -96,7 +104,7 @@ export const Put = (req, res) =>{
     const { newUserPass } = req.body;   
     const { id } = req.params;
     encripto.encryptPassword(newUserPass).then(val => {
-        account.update({
+        Account.update({
             userPass: val
         }, {
             where: {

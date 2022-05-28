@@ -1,10 +1,13 @@
 import express from 'express';
 import morgan from 'morgan';
 const sequelize = require('../DB/db');
+var bodyParser = require('body-parser');
 
 import pkg from '../../package.json';
 import helmet from 'helmet';
 import cors from 'cors';
+require('../DB/associations');
+
 const app = express();
 //Router
 import routelist from '../config/list.route';
@@ -32,6 +35,16 @@ app.use(cors(corsOptions));
 app.use(helmet());
 app.use(express.json());
 
+// Limit 
+app.use(bodyParser.json({
+    limit: '50mb'
+  }));
+  
+  app.use(bodyParser.urlencoded({
+    limit: '50mb',
+    parameterLimit: 100000,
+    extended: true 
+  }));
 //Routes
 app.use(routelist);
 

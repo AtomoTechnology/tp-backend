@@ -1,0 +1,83 @@
+<div class="container">
+    <p-table #dt [value]="userlist"  dataKey="id" styleClass="p-datatable-customers" [rowHover]="true"
+    [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+    [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [filterDelay]="0" [globalFilterFields]="['name','description','phone','creationDate']">
+    <ng-template pTemplate="caption">
+        <div class="table-header">
+          <div class="row">
+            <div class="col-md-12">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                  <h1 class="display-4 py-2 text-truncate  text-center">Lista de usuario</h1>
+                  <a href="/Browser/User/ActionUser/" class="btn btn-primary btn-sm">Nuevo usuario</a>
+                </div>
+            </div>
+          </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+                Codigo
+            </div>
+          </th>
+            <th>
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Nombre
+                </div>
+            </th>
+            <th >
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Descripcion
+                </div>
+            </th>
+            <th >
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Telefono
+                </div>
+            </th>
+            <th >
+                <div class="p-d-flex p-jc-between p-ai-center">
+                    Fecha de alta
+                </div>
+            </th>
+            <th>
+              <div class="p-d-flex p-jc-between p-ai-center">
+                Action
+            </div>
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+        <tr class="p-selectable-row">
+            <td>
+                {{user.id}}
+            </td>
+            <td>
+                {{user.firstName}}
+            </td>
+            <td>
+                {{user.lastName}}
+            </td>
+            <td>
+                {{user.phone}}
+            </td>
+            <td>
+                {{user.creationDate | date: 'MM/dd/yyyy'}}
+            </td>
+            <td>
+              <button pButton pRipple icon="pi pi-pencil" pTooltip="Modificar usuario" tooltipPosition="bottom" class="p-button-rounded p-button-success p-mr-2"  [routerLink]="['/Browser/User/ActionUser/'+ user.id]"></button>
+              <button pButton pRipple icon="pi pi-trash" pTooltip="Eliminar usuario" tooltipPosition="bottom" class="p-button-rounded p-button-warning" (click)="Delete(user.id)"></button>
+          </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="8">No hay permiso.</td>
+        </tr>
+    </ng-template>
+    </p-table>
+  </div>
+  
+  

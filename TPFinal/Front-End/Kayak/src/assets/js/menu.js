@@ -1,5 +1,9 @@
 
+$( document ).ready(function() {
+    console.log( "ready!" );
+});
 $('.actionmenu').on('click', function (){
-    $('.actionmenu').removeClass('active');
+    debugger;
+    $('.actionmenu').removeClass('active');   
     $(this).addClass('active');
 })

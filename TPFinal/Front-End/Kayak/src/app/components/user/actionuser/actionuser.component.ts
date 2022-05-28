@@ -80,14 +80,14 @@ export class ActionuserComponent implements OnInit {
 
       this.browserForm = this.fb.group({
         id:0,      
-        idDocumentType: ['',[Validators.required]],
+        documentTypeId: ['',[Validators.required]],
         firstName: ['',[Validators.required]],
         lastName: ['',[Validators.required]],
         docNumber: ['',[Validators.required]],
         mail: ['',[Validators.required,Validators.pattern(this.isEmail)]],
         address:['',[Validators.required]],
         phone:['',[Validators.required]],
-        idRole:['',val3],
+        rodeId:['',val3],
         userName:['', val1],
         userPass:['', val2],
         state:1

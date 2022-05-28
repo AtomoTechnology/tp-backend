@@ -1,0 +1,122 @@
+<section id="cover">
+    <div id="cover-caption">
+        <div class="container">
+            <div class="row ">
+                <div class="col-xl-10 col-lg-6 col-md-8 col-sm-10 mx-auto  form">
+                    <h1 class="display-4 py-2 text-truncate text-white">{{Option}}</h1>
+                    <div class="px-4">
+                        <form action="" autocomplete="off" class="justify-content-center"  [formGroup]="browserForm" (ngSubmit)="Create()">
+                            
+                            <div class="form-row">
+
+                                <div class="form-group col-md-6">
+                                  <label for="KayaktypeId">Tipo de kayak</label>
+                                  <select class="form-control" id="kayakTypeId" formControlName="KayaktypeId" [class]="isValidField('KayaktypeId')">
+                                    <option value="">Seleccionar el tipo de kayak</option>
+                                    <option value="{{type.id}}" *ngFor ="let type of kayaktypes"  name="KayaktypeId">{{type.name}}</option>
+                                  </select>
+                                  <div class="invalid-feedback">
+                                    <span *ngIf="browserForm.get('KayaktypeId').errors?.required">
+                                        Debe seleccionar el tipo de kayak
+                                    </span>
+                                  </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <div>
+                                        <label for="inputdocnumber">Dueño kayak</label>
+                                    </div>
+                                    <div>
+                                        <p-autoComplete formControlName="userId" [class]="isValidField('userId')" 
+                                        placeholder="Ingrese el dueño del kayak"  [class]="isValidField('userId')" 
+                                        [showEmptyMessage]="true" [suggestions]="filteredUsers" (completeMethod)="filterUser($event)" 
+                                        field="firstName" [minLength]="1" [forceSelection]="true">
+                                           
+                                        </p-autoComplete>                                        
+                                    
+                                        <div class="invalid-feedback">
+                                            <span *ngIf="browserForm.get('userId').errors?.required">
+                                                Debe ingresar el dueño del kayak.
+                                            </span>
+                                          </div>
+                                    </div>
+                                  
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="crewmember">Cantidad de tripulante</label>
+                                    <input type="number" min="1" class="form-control" id="crewmember" placeholder="Cantidad de tripulante" name="crewmember"
+                                    formControlName="crewmember"  [class]="isValidField('crewmember')">
+                                    <div class="invalid-feedback">
+                                        <span *ngIf="browserForm.get('crewmember').errors?.required">
+                                            Debe ingresar la cantidad de tripulante
+                                        </span>
+                                    </div>
+                                </div>
+
+                               <div class="form-group col-md-6">
+                                    <label for="shovelQuantity">Cantidad de pala</label>
+                                    <input type="text" class="form-control" id="shovelQuantity"  placeholder="Cantidad de pale" name="shovelQuantity"
+                                    formControlName="shovelQuantity"  [class]="isValidField('shovelQuantity')">
+                                    <div class="invalid-feedback">
+                                        <span *ngIf="browserForm.get('shovelQuantity').errors?.required">
+                                            Debe ingresar la cantidad de pale
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                   <div>
+                                       <div>
+                                            <label for="nroKayak">Nro. de indentificacion Kayak</label>
+                                            <input type="text" class="form-control" id="nroKayak" placeholder="Nro. de indentificacion Kayak" name="nroKayak"
+                                            formControlName="nroKayak"  [class]="isValidField('nroKayak')">
+                                            <div class="invalid-feedback">
+                                                <span *ngIf="browserForm.get('nroKayak').errors?.required">
+                                                    Debe ingresar el Nro. de indentificacion Kayak
+                                                </span>
+                                            </div>
+                                       </div>
+                                       <div >
+                                            <label for="inputdescription">description</label>
+                                            <textarea type="text" rows="6" class="form-control" id="inputdescription" placeholder="Descripción" name="phone"
+                                            formControlName="description" ></textarea>
+                                       </div>
+                                   </div>
+                                </div>
+
+                               <div class="form-group col-md-6">
+                                    <label for="name">Foto kayak</label>
+                                    <div>
+                                        <div class="col-md-8 box">
+                                            <img src="{{img}}" alt="">
+                                        </div>
+                                        <div class="col-md-4 ">
+                                            
+                                            <label for="kayakimg" class="btn btn-primary center-block">Selecciona imagen</label>
+                                            <input type="file" id="kayakimg" hidden  (change)="onFileChanged($event)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="float-right mb-3">
+                              <button [routerLink]="['/Browser/Kayak']" class="btn btn-primary mr-3">Cancelar</button>
+                              <button type="submit" class="btn btn-primary">{{OptionBtn == false ? "Guardar" : "Actualizar"}}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+
+
+

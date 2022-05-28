@@ -1,0 +1,34 @@
+<nav class="navbar sticky-top  mb-3 navbar navbar-expand-xl navbar-dark  header-bar active" >
+    <a class="active" href="/Browser/Kayak" class="Browse" ng-click="active='Browse'">Kayak</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+      <ul class="navbar-nav ml-auto">
+        <li  *ngFor="let perfil of menunav; let i = index"
+         routerLinkActive="active"
+        (click)="activatedClass( perfil.displayName)"
+        >
+          <a *ngIf="!perfil.isSubMenu" href="{{perfil.url}}"
+              [class]="getClaseCSSActivated( perfil.displayName, false , i ) + ' count'">
+            {{perfil.displayName | titlecase}}
+            <span class="sr-only">(current)</span>
+          </a>
+
+          <a [class]="getClaseCSSActivated( perfil.displayName, true , i  )"
+            *ngIf="perfil.isSubMenu" href="#" id="navbarDropdown"
+            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             Mi perfil
+          </a>
+
+          <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdown" *ngIf="perfil.isSubMenu">
+            <a class="dropdown-item" routerLink={{linkperfil}}>Mi cuenta</a>
+            <a class="dropdown-item" [routerLink]="['/User/ChangePassWord']">Cambiar contraseña</a>
+            <a class="dropdown-item" (click)="LogoutEmitter()" style="cursor: pointer;">Cerrar sesion</a>
+          </div>
+
+        </li>
+      </ul>
+    </div>
+  </nav>

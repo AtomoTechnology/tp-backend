@@ -15,7 +15,7 @@ export class StateloginService implements CanActivate, CanLoad {
   canLoad() {
     debugger;
     if (!this.authService.loggedIn()) {
-      this.router.navigate(['/Account']);
+      this.router.navigate(['/Home']);
     }
     return this.authService.loggedIn();
   }

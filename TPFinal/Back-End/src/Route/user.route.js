@@ -1,26 +1,26 @@
 import {Router} from 'express';
 import {authjwt, validator} from '../Middlewares'
-import * as usercontroller from '../Controllers/user.controller';
+import * as ctrl from '../Controllers/user.controller';
 const router = Router();
 
 //Get All user
-router.get('/',[authjwt.verifyToken],usercontroller.GetAll);
+router.get('/',[authjwt.verifyToken],ctrl.GetAll);
 
 //Get by id
-router.get('/:id',[authjwt.verifyToken], usercontroller.GetById);
+router.get('/:id',[authjwt.verifyToken], ctrl.GetById);
 
 //Create
 router.post('/',[
     validator.checkUserNameNoneRepeat,
     validator.checkRoleExisted,validator.isUserValid,validator.isPassValid,
     validator.IsmailValid, validator.EmailNoneRepeat, validator.NumDocumentNoneRepeat,
-    validator.PhoneNoneRepeat
-    ],usercontroller.Post);
+    validator.PhoneNoneRepeat, validator.isDocumentTypeValid
+    ],ctrl.Post);
 
 //Update
-router.put('/:id',[authjwt.verifyToken, authjwt.isAdmin,validator.checkRoleExisted, validator.IsmailValid], usercontroller.Put);
+router.put('/:id',[authjwt.verifyToken, authjwt.isAdmin,validator.checkRoleExisted, validator.IsmailValid], ctrl.Put);
 
 //Delete
-router.delete('/:id',[authjwt.verifyToken, authjwt.isAdmin], usercontroller.Delete);
+router.delete('/:id',[authjwt.verifyToken, authjwt.isAdmin], ctrl.Delete);
 
 module.exports = router;

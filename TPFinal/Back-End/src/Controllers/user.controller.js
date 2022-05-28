@@ -4,9 +4,16 @@ require('dotenv').config();
 const user = require('../DB/models/user');
 const account = require('../DB/models/account');
 
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 export const GetAll = (req, res) => {
+    console.log("Llego en GetAll user ", req.params);
+    const {
+        filter
+    } = req.params;
     user.findAll({
-        attributes: ['id', 'firstName', 'lastName', 'creationDate', "idDocumentType", "docNumber", 'mail', 'address', 'phone', 'state'],
+        attributes: ['id', 'firstName', 'lastName', 'creationDate', "documentTypeId", "docNumber", 'mail', 'address', 'phone', 'state'],
         where: {
             state: 1
         },
@@ -22,8 +29,9 @@ export const GetById = (req, res) => {
     const {
         id
     } = req.params;
+    console.log("El id corresponde es: ", id);
     user.findOne({
-        attributes: ['id', 'firstName', 'lastName', 'creationDate', "idDocumentType", "docNumber", 'mail', 'address', 'phone', 'state'],
+        attributes: ['id', 'firstName', 'lastName', 'creationDate', "documentTypeId", "docNumber", 'mail', 'address', 'phone', 'state'],
         where: {
             id: id
         }
@@ -34,29 +42,30 @@ export const GetById = (req, res) => {
 
 export const Post = (req, res) => {
     const {
-        firstName, lastName,address,phone,userName,userPass, idRole,
-        idDocumentType, mail,docNumber
+        firstName, lastName,address,phone,
+        documentTypeId, mail,docNumber,
+            roleId,
+            userName,
+            userPass
     } = req.body;
+
+    const tiempoTranscurrido = Date.now();
+    const today = new Date(tiempoTranscurrido);
+
     encripto.encryptPassword(userPass).then(val => {
         user.create({
-            id: 0,firstName: firstName,lastName: lastName,address: address,phone: phone,
-            idDocumentType: parseInt(idDocumentType), mail: mail,docNumber: docNumber,state: 1
+            id: 0,firstName: firstName,lastName: lastName,address: address,phone: phone,creationDate:today,
+            documentTypeId: parseInt(documentTypeId), mail: mail,docNumber: docNumber,state: 1
         }).then(us => {
-            user.findOne({
-                attributes: ['id', 'firstName', 'lastName', 'creationDate', 'address', 'phone', 'state'],
-                where: {
-                    mail: mail
-                }
-            }).then(x => {
-                account.create({
-                    id: 0, roleId: parseInt(idRole),userId: x.dataValues.id,
-                    userName: userName,userPass: val,state: 1
-                }).then(p => {
-                    res.json({
-                        status:  parseInt(process.env.success_code),
-                        message: 'El usuario fue creado con exito'
-                    });
-                })
+            account.create({
+                id: 0, roleId: parseInt(roleId),userId: us.dataValues.id,creationDate:today,
+                userName: userName,userPass: val,state: 1
+            }).then(p => {
+                res.json({
+                    status:  parseInt(process.env.success_code),
+                    title: 'Crear usuario',
+                    message: 'El usuario fue creado con exito'
+                });
             })
         });
     });
@@ -64,11 +73,11 @@ export const Post = (req, res) => {
 }
 
 export const Put = (req, res) => {
-    const { firstName, lastName, address, phone,idDocumentType,mail,docNumber } = req.body;   
+    const { firstName, lastName, address, phone,documentTypeId,mail,docNumber } = req.body;   
     const { id } = req.params;
     user.update({
         firstName: firstName,lastName: lastName, address: address,
-        phone: phone,idDocumentType: parseInt(idDocumentType),
+        phone: phone,documentTypeId: parseInt(documentTypeId),
         mail: mail,docNumber: docNumber
     }, {
         where: {

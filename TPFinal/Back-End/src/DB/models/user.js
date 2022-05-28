@@ -1,42 +1,35 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize =  require('../db');
-import kayak from './kayak';
-import account from './account';
+// import * as model from '../../Middlewares/listimport';
 
 class User extends Model {}
 User.init({
     id:{
         type: DataTypes.BIGINT,
-        allowNull:false,unique:true,
-        primaryKey: true
+        allowNull:false,
+        autoIncrement: true,
+        unique:true,
+        primaryKey: true,
+    },
+    documentTypeId: { 
+        type: DataTypes.BIGINT(11),
+        allowNull: false, 
+        references: {
+          model:'documenttypes',
+          key: 'id'
+        }
     },
     firstName: DataTypes.STRING, 
     lastName: DataTypes.STRING, 
     address: DataTypes.STRING, 
     phone: DataTypes.STRING,
-    idDocumentType: DataTypes.BIGINT,
     docNumber: DataTypes.STRING,
-    mail:{
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate(value) {
-            if (!validator.isEmail(value)) {
-                throw new Error('Email incorrecto');
-            }
-        }
-    },
-    creationDate:DataTypes.DATE,
+    mail:DataTypes.STRING,
+    creationDate: DataTypes.DATE,
+    finalDate: DataTypes.DATE,
     state: DataTypes.INTEGER  
 },
 { sequelize, modelName: 'users' });
-
-//Relacion
-    User.hasMany(kayak);
-    kayak.belongsTo(User);
-
-    User.hasMany(account);
-    account.belongsTo(User);
 
 module.exports = User;
 

@@ -19,10 +19,11 @@ export class ActionhangerComponent implements OnInit {
   hanger:Hanger;
   private ctrl = new ApiController();
 
-  browserForm: FormGroup;
+  hangerForm: FormGroup;
   private isEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   constructor(private fb:FormBuilder, private route: ActivatedRoute,
     private router:Router,private genericService:GenericService,private messageService: MessageService) {
+      debugger;
       let id = this.route.snapshot.paramMap.get('id');
       this.OptionBtn = id !== null ? true : false;
       this.initForm();
@@ -49,15 +50,15 @@ export class ActionhangerComponent implements OnInit {
       this.genericService.GetById(id, this.ctrl.hanger).subscribe(result =>{
         debugger;
         this.hanger = JSON.parse(JSON.stringify(result));
-        this.browserForm.patchValue(this.hanger);
+        this.hangerForm.patchValue(this.hanger);
       })
     }
     
     
       private initForm():void{  
-        this.browserForm = this.fb.group({
+        this.hangerForm = this.fb.group({
           id:0,      
-          idLocation: ['',[Validators.required]],
+          locationId: ['',[Validators.required]],
           nrohanger: ['',[Validators.required]],          
           description:'',
           state:1
@@ -65,7 +66,7 @@ export class ActionhangerComponent implements OnInit {
       }
   
     isValidField(field: string): string{
-      const validatedField = this.browserForm.get(field);
+      const validatedField = this.hangerForm.get(field);
       let result = (!validatedField.valid && validatedField.touched) ?
       'is-invalid': validatedField.touched ? 'is-valid':'';
       return result;
@@ -73,7 +74,7 @@ export class ActionhangerComponent implements OnInit {
 
     Create (){
       debugger;
-      if(this.browserForm.valid) {
+      if(this.hangerForm.valid) {
         if(this.OptionBtn == false){
           this.ActionCreate();
         }
@@ -86,11 +87,11 @@ export class ActionhangerComponent implements OnInit {
     
     ActionCreate(){
       debugger;
-      this.genericService.Post(this.browserForm.value, this.ctrl.hanger).subscribe((data:any) =>{
+      this.genericService.Post(this.hangerForm.value, this.ctrl.hanger).subscribe((data:any) =>{
         debugger;
         if(data.status === 200){
           setTimeout(()=>{
-            this.router.navigate(['/Hanger']);
+            this.router.navigate(['/Browser/Hanger']);
           }, 5000);
           this.messageService.Success(data.title, data.message);
           
@@ -107,11 +108,11 @@ export class ActionhangerComponent implements OnInit {
   
     ActionUpdate(){
       debugger;
-      this.genericService.Put(this.browserForm.value, this.ctrl.hanger).subscribe((data:any) =>{
+      this.genericService.Put(this.hangerForm.value, this.ctrl.hanger).subscribe((data:any) =>{
         debugger;
         if(data.status === 200){
           setTimeout(()=>{
-            this.router.navigate(['/Hanger']);
+            this.router.navigate(['/Browser/Hanger']);
           }, 5000);
           this.messageService.Success(data.title, data.message);
         }

@@ -1,0 +1,10 @@
+<app-header (Logout)="Logout($event)" [menunav]="menunav" [linkperfil]="perfil"></app-header>
+<div flexLayout="row">
+    <div class="content">
+        <router-outlet>
+            <div *ngIf="isinitial">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero rem repellat totam. Dolore tempore, ut, nobis doloremque perspiciatis error a cupiditate laboriosam possimus vero ullam maxime assumenda voluptate, aut dolorum.
+            </div>
+        </router-outlet>
+    </div>
+</div>

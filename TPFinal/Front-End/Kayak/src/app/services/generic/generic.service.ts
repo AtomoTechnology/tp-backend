@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { TaskService } from '../auth/task.service';
 import { IService } from '../../Interfaces/interface.service';
+import { ApiController } from "../../apicontroller/api.controller";
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +12,18 @@ import { IService } from '../../Interfaces/interface.service';
 export class GenericService implements IService<any, string> {
 
   private urlBase = environment.api_url;
+  private ctrl = new ApiController();
+
   constructor(private http: HttpClient,
     private taskService: TaskService) { }
 
   GetAll(filter: string, ctrl: string): Observable<any[]> {
-    debugger;
+    debugger
+    let params = new HttpParams().set('firstname', filter);
+    let url = "";
+    if(filter === "" && ctrl ==  this.ctrl.user){
+      filter ="sin filtro";
+    }
       return this.http.get<any[]>(`${this.urlBase + ctrl}`,
       {headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded',

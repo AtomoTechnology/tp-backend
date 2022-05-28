@@ -25,34 +25,46 @@ export class MenuserviceService {
   private  GetAdmin(){
     this.menunav=[
       {
-        url:"/Kayak",
+        url:"/Browser/Kayak",
         displayName:"Kayak",
-        active:"active kayak"
+        active:"active kayak",
+        isSubMenu: false
       },
       {
-        url:"/User",
+        url:"/Browser/User",
         displayName:"Usuario",
-        active:"user"
+        active:"user",
+        isSubMenu: false
       },
       {
-        url:"/Hanger",
+        url:"/Browser/Hanger",
         displayName:"Parches",
-        active:"hanger"
+        active:"hanger",
+        isSubMenu: false
       },
       {
-        url:"/Kayak/KayakType",
+        url:"/Browser/Kayak/KayakType",
         displayName:"Tipo kayak",
-        active:"hanger"
+        active:"hanger",
+        isSubMenu: false
       },
+      // {
+      //   url:"/Browser/Partner",
+      //   displayName:"Socio",
+      //   active:"partner",
+      //   isSubMenu: false
+      // },
       {
-        url:"/Partner",
-        displayName:"Socio",
-        active:"partner"
-      },
-      {
-        url:"/Location",
+        url:"/Browser/Location",
         displayName:"Ubicacion",
-        active:"partner"
+        active:"partner",
+        isSubMenu: false
+      },
+      {
+        url:"",
+        displayName:"",
+        active:"",
+        isSubMenu: true
       }
     ]
     return this.menunav;
@@ -61,27 +73,27 @@ export class MenuserviceService {
   private GetUser(){
     this.menunav=[
       {
-        url:"/ActionKayak",
+        url:"/Browser/ActionKayak",
         displayName:"Crear kayak",
         active:"active kayak"
       },
       {
-        url:"/User",
+        url:"/Browser/User",
         displayName:"Crear usuario",
         active:"user"
       },
       {
-        url:"/Hanger",
+        url:"/Browser/Hanger",
         displayName:" Crear parches",
         active:"hanger"
       },
+      // {
+      //   url:"/Browser/Partner",
+      //   displayName:"Crear socio",
+      //   active:"partner"
+      // },
       {
-        url:"/Partner",
-        displayName:"Crear socio",
-        active:"partner"
-      },
-      {
-        url:"/Location",
+        url:"/Browser/Location",
         displayName:"Crear ubicacion",
         active:"partner"
       }
@@ -92,27 +104,27 @@ export class MenuserviceService {
   private GetFullAdmin(){
     this.menunav=[
       {
-        url:"/ActionKayak",
+        url:"/Browser/ActionKayak",
         displayName:"Crear kayak",
         active:"active kayak"
       },
       {
-        url:"/User",
+        url:"/Browser/User",
         displayName:"Crear usuario",
         active:"user"
       },
       {
-        url:"/Hanger",
+        url:"/Browser/Hanger",
         displayName:" Crear parches",
         active:"hanger"
       },
+      // {
+      //   url:"/Browser/Partner",
+      //   displayName:"Crear socio",
+      //   active:"partner"
+      // },
       {
-        url:"/Partner",
-        displayName:"Crear socio",
-        active:"partner"
-      },
-      {
-        url:"/Location",
+        url:"/Browser/Location",
         displayName:"Crear ubicacion",
         active:"partner"
       }

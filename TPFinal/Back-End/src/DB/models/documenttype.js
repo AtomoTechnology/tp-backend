@@ -5,11 +5,17 @@ class Documenttype extends Model {}
 Documenttype.init({ 
     id:{
         type: DataTypes.BIGINT,
-        primaryKey: true
+        allowNull:false,
+        autoIncrement: true,
+        unique:true,
+        primaryKey: true,
     },   
     name: DataTypes.STRING, 
     description: DataTypes.STRING,
-    state: DataTypes.INTEGER   
+    creationDate: DataTypes.DATE,
+    finalDate: DataTypes.DATE,
+    state: DataTypes.INTEGER  
 },
 { sequelize, modelName: 'documenttypes' });
+
 module.exports = Documenttype;

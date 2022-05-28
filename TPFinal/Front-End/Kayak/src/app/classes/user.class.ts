@@ -1,7 +1,7 @@
 export class User {
   id: number;  
   idRole: number;
-  idDocumentType: number;
+  documentTypeId: number;
   firstName: string;
   lastName: string;
   docNumber: string;

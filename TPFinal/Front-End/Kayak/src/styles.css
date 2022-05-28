@@ -1,42 +1,138 @@
-form:before {
-    content: '';
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    background-color: #ffffff;
-    z-index: -1;
-    border-radius: 10px;
-  }
-  label {
-    float: left;
-  }
-  textarea {
-    resize: none;
-  }
+
   .abs-center {
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
   }
-  
+   a {
+    cursor: pointer;
+  }
+  tr > th{
+    font-size: 1.9rem;
+    font-weight: bold;
+  }
   .form {
     width: 450px;
   }
   .text-white{
       color: initial!important;  
-  }
-  
-  html, body {
-      height: 100%;
-      background: #ffffff;
-      font: normal 13px/20px 'Lato', 'sans-serif';
-      color: #000;
+      text-align: center!important;
   }
   .cotainer-top {
       background: #ffffff;
       position: relative;
       z-index: 111;
   }
+  a {
+    color: #ccd1d6!important;
+}
+
+.dropdown-item {
+  color: #212529!important;
+}
+
+.btn-primary {
+  color: #fff!important;
+}
+
+/* Page principal */
+a {
+  color: #337ab7;
+  text-decoration: none;
+}
+
+.header-bar .header-link {
+  color: #ff821d!important;
+  font-size: 17px;
+  margin-top: 5px;  
+  margin-left: 6%;
+  display: block;
+} 
+.p-galleria-thumbnail-wrapper > div > button{
+  display: none!important;
+}
+
+hr{
+  height: 0.2%;
+  background-color: rgb(17, 16, 16);
+}
+
+/* Contact slice */
+@keyframes slicer{
+  0%{
+    opacity: 0;
+    transform: translateY(-350px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.consulta-form{
+  animation: slicer 3s;
+  /* transition: 500 ease-in-out; */
+  display: none;
+}
+.consulta-form.active{
+  display: inline-block;
+}
+/* fsp */
+
+.fsp{
+  /* font-size: 1.6rem; */
+  font-size: initial;
+  color: #212529;
+}
+
+/* bgc */
+
+.bgcolor{
+  background-color: #f8f9fa;
+}
+
+/* AUtocomplete */
+
+.p-component{
+  width: 100%;
+}
+.p-component > input{
+  width: 100%;
+}
+
+/* Img */
+.box{
+  width: 100%;
+  height: 22vh;
+  overflow: hidden;
+}
+.box img{
+  width: 100%;
+  height: 22vh;
+  -webkit-background-size: 100% 100%;           /* Safari 3.0 */
+  -moz-background-size: 100% 100%;           /* Gecko 1.9.2 (Firefox 3.6) */
+  -o-background-size: 100% 100%;           /* Opera 9.5 */
+  background-size: 100% 100%;           /* Gecko 2.0 (Firefox 4.0) and other CSS3-compliant browsers */
+}
+
+.scroll {
+  max-height: 88%;
+  overflow-y: auto;
+}
+::-webkit-scrollbar {
+  width: .5em;
+}
+::-webkit-scrollbar-track:vertical {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:vertical {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+.modal-body > .col-md-12 > .box img {
+  height: 48vh!important;
+}
+.p-datatable table {
+  table-layout: auto!important;
+}

@@ -1,21 +1,13 @@
 import { Routes } from "@angular/router";
-import { AccountComponent } from "../components/account/account/account.component";
-import { PrincipalComponent } from "../components/principal/principal/principal.component";
 
 export const appRoutes: Routes = [
   {
-    path: 'Browser',
-    loadChildren:() => import("../modules/contentprincipal/contentprincipal.module").then((p) => p.ContentprincipalModule)
-  },
-  {
     path: 'Home',
-    component: PrincipalComponent,
-     data: {title: 'Acceder al sistema'}
+    loadChildren: () => import('../home/home.module').then( m => m.HomeModule)
   },
   {
-    path: 'Account',
-    component: AccountComponent,
-     data: {title: 'Acceder al sistema'}
+    path: 'Browser',
+    loadChildren:() => import("../accountlogin/accountlogin.module").then( m => m.AccountloginModule)
   },
   {
     path: '',

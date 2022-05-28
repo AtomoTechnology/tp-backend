@@ -5,7 +5,16 @@ require('dotenv').config();
 export const GetAll = (req, res) =>{
     kayakType.findAll({
         attributes: ['id', 'name', 'description', 'creationDate', 'state'],
-        include: kayak ,
+        // include: kayak ,
+        include:[
+            {
+                model: kayak, 
+                as: 'KayakType',              
+                where:{
+                    state: 1
+                },
+                required: false
+            }] ,
         where: {
             state: 1
         },

@@ -21,6 +21,7 @@ import { LocationComponent } from 'src/app/components/location/location.componen
 import { HangerComponent } from '../../components/hanger/hanger.component';
 import { KayaktypeComponent } from '../../components/kayaks/kayaktype/kayaktype.component';
 import { ActionkayaktypeComponent } from '../../components/kayaks/kayaktype/actionkayaktype/actionkayaktype.component';
+import { KayakRoutingModule } from '../kayak/kayak-routing.module';
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import { ActionkayaktypeComponent } from '../../components/kayaks/kayaktype/acti
   ],
   imports: [
     CommonModule,
-    ContentprincipalRoutingModule,ReactiveFormsModule,FormsModule,
+    ContentprincipalRoutingModule,ReactiveFormsModule,FormsModule,KayakRoutingModule,
     SharedModule,TableModule,AccordionModule,ButtonModule,ToastrModule.forRoot({
       progressBar: true,
       timeOut: 5000,

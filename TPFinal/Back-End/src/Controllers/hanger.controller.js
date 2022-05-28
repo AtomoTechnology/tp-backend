@@ -4,8 +4,8 @@ const sequelize = require('../DB/db');
 const { QueryTypes } = require('sequelize');
 
 export const GetAll = (req, res) =>{
-    sequelize.query(`SELECT hg.id, hg.idLocation, hg.nrohanger, hg.creationDate, loc.name as location, hg.description, hg.state FROM hangers hg 
-    inner join  locations loc on hg.idLocation = loc.id  where hg.state = 1`, { type: QueryTypes.SELECT })
+    sequelize.query(`SELECT hg.id, hg.locationId, hg.nrohanger, hg.creationDate, loc.name as location, hg.description, hg.state FROM hangers hg 
+    inner join  locations loc on hg.locationId = loc.id  where hg.state = 1`, { type: QueryTypes.SELECT })
     .then(result =>{
         res.json(result);
     });  
@@ -14,7 +14,7 @@ export const GetAll = (req, res) =>{
 export const GetById = (req, res) =>{    
     const { id } = req.params;
     hanger.findOne({
-        attributes: ['id', 'idLocation', 'description', 'nrohanger','creationDate',  'state'],
+        attributes: ['id', 'locationId', 'description', 'nrohanger','creationDate',  'state'],
         where: {
             id: id,
             state: 1
@@ -30,7 +30,7 @@ export const Post = (req, res) =>{
     const tiempoTranscurrido = Date.now();
     const today = new Date(tiempoTranscurrido);
     hanger.create({
-        idLocation: idLocation,
+        locationId: idLocation,
         description: description,
         nrohanger:nrohanger,
         creationDate: today,
@@ -56,7 +56,7 @@ export const Put = (req, res) =>{
     const { idLocation, description,nrohanger} = req.body;
     const { id } = req.params;
     hanger.update({
-        idLocation: idLocation,
+        locationId: idLocation,
         description: description,
         nrohanger:nrohanger
     }, {

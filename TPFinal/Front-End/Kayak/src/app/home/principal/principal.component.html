@@ -1,0 +1,238 @@
+<!--Navbar -->
+<nav class="navbar sticky-top navbar navbar-expand-xl navbar-dark header-bar">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
+      aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+      
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <div class="header1">
+            <div class="header-bar">
+              <div class="container marcopos">             
+                <form class="form-inline" id="formulario" [formGroup]="accountForm" (ngSubmit)="OnSubmit()">
+                    <div class="form-group">
+                      <span>INGRESO</span>
+                    </div>
+                    <div class="form-group">
+                      <input type="text"  placeholder="Nombre usuario"  
+                      name="userName" id="userName"
+                      formControlName="userName">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" placeholder="Contraseña"
+                      name="userPass" id="userPass"
+                      formControlName="userPass" [class]="isValidField('userPass')">
+                      <input class="headerBoton" type="submit" value="&nbsp;">
+                    </div>
+                    <div class="form-group">
+                      <a class="header-link" href="../registracion">REGISTRATE</a>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+  
+        </li>
+      </ul>
+      
+    </div>
+  </nav>
+  <!--/.Navbar -->
+  
+  <p-galleria [(value)]="images" [responsiveOptions]="responsiveOptions" [containerStyle]="{'max-width': '100%', 'max-height':'100vh'}" [numVisible]="10" [circular]="true"
+          [autoPlay]="true" [transitionInterval]="2000"  [showItemNavigators]="true" [baseZIndex]="100000"> 
+          <ng-template pTemplate="item" let-item>
+              <img [src]="item.previewImageSrc" style="width: 100%; display: block; height: 90vh;" />
+          </ng-template>
+  </p-galleria>
+  <hr>
+  <div class="col d-flex">
+    <div class="col-sm-6 bgcolor">
+      <div class="col d-flex">
+      <div class="col-sm-6">
+        <img src="../assets/img/kayak.png" class="card-img-top" alt="...">
+      </div>
+      <div class="col-sm-6">
+        <h1 for="" class="font-weight-bold text-center" style="color: rgb(229, 113, 14);">
+          <u>KAYAKS</u>
+          </h1>
+          <div class="col text-justify fsp">
+            Compartimos con vos la pasión por el remo y disfrutamos diseñando variadas embarcaciones para que puedas disfrutar a tu manera.
+          </div>
+          <button class="btn btn-primary-modify float-right mt-4" data-toggle="modal" data-target="#exampleModal">
+              Ver mas...
+          </button>
+      </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="col d-flex bgcolor">
+        <div class="col-sm-6">
+          <img src="../assets/img/accesorio.png" class="card-img-top" alt="...">
+        </div>
+        <div class="col-sm-6">
+          <h1 for="" class="font-weight-bold text-center" style="color: rgb(229, 113, 14);">
+            <u>ACCESORIOS</u>
+            </h1>
+            <div class="col text-justify fsp">
+              El kayak es una actividad milenaria donde la consigna es «menos es más». El rollo minimalista es una de las claves de la filosofía de este deporte donde se trata que una persona se acerque lo más posible a lo que hace un delfín en el agua. Claro que en el tiempo ese minimalismo ha ido evolucionando de forma que se han ido añadiendo accesorios que hacen del kayakismo algo fácil, seguro y divertido. Por eso me gustaría contarte primero el equipo básico de kayak. Lo esencial. Y luego todos los accesorios recomendables que puedes añadir. Eso si, que no te invada la moderna fiebre consumista,
+               a lo mejor compras tantos accesorios, que hundes tu kayak.
+            </div>
+              <button class="btn btn-primary-modify float-right mt-4" data-toggle="modal" data-target="#exampleModal">
+                  Ver mas...
+              </button>
+        </div>
+        </div>
+    </div>
+  </div>
+  
+  <hr>
+    <div class="col d-flex">
+      <div class="col-sm-12">
+        <div class="col d-flex bgcolor">
+          <div class="col-sm-8">
+            <h1 for="" class="font-weight-bold text-center" style="color: rgb(229, 113, 14);">
+              <u>COMO ELEGIR UN KAYAK</u>
+              </h1>
+              <div class="col text-justify fsp">
+                La palabra KAYAK en el  idioma de los esquimales significa “ropa de agua”, entonces como con la ropa tenemos que ver cuáles son las claves para cada elección, siempre pensando en la comodidad a lo largo de las jornadas de remo.
+                A la hora de elegir tu kayak, puedes fijarte también en su longitud (mas largo, más rápido), el peso, el tamaño de la bañera, el volumen de carga, el material de construcción, anchura, estabilidad / la forma del casco, precio, etc. El uno es más rápido y maniobrable.
+                Aunque elegir un kayak puede parecer una tarea sencilla, lo cierto es que son varios los factores que hay que tener en cuenta para hacernos con un modelo que se adapte correctamente a nuestras necesidades. 
+              </div>
+              <button class="btn btn-primary-modify float-right mt-4" data-toggle="modal" data-target="#exampleModal">
+                  Ver mas...
+              </button>
+          </div>
+          
+          <div class="col-sm-4">
+            <img src="../assets/img/elegirkayak.png" class="card-img-top" alt="...">
+          </div>
+         </div>
+      </div>
+    </div>
+  
+  <hr>
+  <div class="row  m-0  row-cols-1 row-cols-md-4">
+    
+    <div class="col mb-4">
+      <div class="card h-100">
+        <img src="../assets/img/kayak2.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+            content. This content is a little bit longer.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col mb-4">
+      <div class="card h-100">
+        <img src="../assets/img/kayak1.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a short card.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col mb-4">
+      <div class="card h-100">
+        <img src="../assets/img/kayak3.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+            content.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col mb-4">
+      <div class="card h-100">
+        <img src="../assets/img/kayak4.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+            content. This content is a little bit longer.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col mb-4">
+      <div class="card h-100">
+        <img src="../assets/img/kayak2.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+            content. This content is a little bit longer.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col mb-4">
+      <div class="card h-100">
+        <img src="../assets/img/kayak1.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a short card.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Contacto -->
+  <div class="botones_izq">  
+    <div class="consulta" >
+    <div class="consulta-form"  >
+      <h2>GRACIAS POR COMUNICARTE CON NOSOTROS</h2>
+      <h1>ENVIANOS TU CONSULTA</h1>
+      <form action="gracias-por-contactarnos" id="contacto">
+        <input type="hidden" name="hmz" class="hmz">
+        <input type="hidden" name="accion">
+        <input type="hidden" name="uniqid" >
+        <input type="hidden" name="asunto" id="asunto" value="Consulta">
+        <input type="hidden" name="telefono" id="telefono" value="">
+        <div class="form-group">
+          <label for="nombre">Tu Nombre <span class="text-danger">(*)</span></label>
+          <input type="text" name="nombre" id="nombre"  class="form-control" required="required">
+        </div>
+        <div class="form-group">
+          <label for="email">Tu E-Mail <span  class="text-danger">(*)</span></label>
+          <input type="email" name="email" id="email" class="form-control" required="required">
+        </div>
+        <div class="form-group">
+          <label for="asunto">Consulta <span class="text-danger">(*)</span></label>
+          <textarea name="mensaje" id="mensaje" class="form-control" rows="3" required="required"></textarea>
+        </div>
+        
+        <button class="btn btn-primary float-right text-center mt-4" data-toggle="modal" data-target="#exampleModal">
+          ENVIAR
+      </button>
+      <label  class="text-danger  text-center">(*) Campos obligatorios</label>
+        <!-- <button type="submit">ENVIAR</button> -->
+        <!-- <span  class="text-danger">(*) Campos obligatorios</span> -->
+      </form>
+    </div>
+    <a class="consulta-boton"  style="margin: 46px 0px 0px 0px;"  (click)="ShowContact()"><img src="../assets/img/boton_izq_consulta.gif"></a>
+    <!-- <button class="imgopenoroff">lksdflksjdflksdf</button> -->
+  </div>
+  </div>
+  <!-- fin -->
+  
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ <!-- <button type="button" class="pro">
+   click
+ </button> -->

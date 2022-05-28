@@ -9,3 +9,23 @@ ul li a {
     font-weight: 400;
     color: #000;
 }
+
+.btn-primary-modify {
+    font-weight: 300!important;
+    font-size: initial;
+    color: #fff!important;
+    background-color: #000!important;
+    border-color: #000 #000 #000!important;
+    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25)!important;
+    border: 1px solid #000!important;
+    border-bottom-color: #000!important;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+    font-family: 'Roboto Slab',serif;
+}
+
+.btn-primary-modify:hover, .btn:focus, .btn:active, .btn.active, .btn.disabled, .btn[disabled] {
+    color: #464133!important;
+    background-color: #e6e6e6!important;
+}

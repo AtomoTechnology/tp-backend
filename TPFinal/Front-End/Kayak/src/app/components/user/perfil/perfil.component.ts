@@ -138,7 +138,7 @@ export class PerfilComponent implements OnInit {
   private initForm():void{
     this.browserForm = this.fb.group({
       id:this.idperfil,      
-      idDocumentType: ['',[Validators.required]],
+      documentTypeId: ['',[Validators.required]],
       firstName: ['',[Validators.required]],
       lastName: ['',[Validators.required]],
       docNumber: ['',[Validators.required]],

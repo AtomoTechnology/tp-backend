@@ -5,9 +5,25 @@ import User from '../DB/models/user';
 
 export const GetAll = (req, res) =>{
     kayak.findAll({
-        attributes: ['id', 'userId', 'hangerId', 'KayaktypeId','nroKayak', 'img','shovelQuantity','crewmember','creationDate', 'state'],
-        include: User ,
-        include: kayaktype ,
+        attributes: ['id', 'userId', 'accountId', 'KayaktypeId','nroKayak', 'img','shovelQuantity','crewmember','creationDate', 'state'],
+        include:[
+            {
+                model: User,
+                as: "userKayak",
+                where: {
+                    state: parseInt(process.env.Activated)
+                },
+                required: false
+            },
+            {
+                model: kayaktype,
+                as: "typeKayak",
+                where: {
+                    state: parseInt(process.env.Activated)
+                },
+                required: false
+            }
+        ],
         where: {
             state: 1
         }
@@ -19,9 +35,25 @@ export const GetAll = (req, res) =>{
 export const GetById = (req, res) =>{    
     const { id } = req.params;
     kayak.findOne({
-        attributes: ['id', 'userId', 'hangerId','KayaktypeId','nroKayak', 'img','shovelQuantity','crewmember','creationDate', 'state'],
-        include: User ,
-        include: kayaktype ,
+        attributes: ['id', 'userId', 'accountId','KayaktypeId','nroKayak', 'img','shovelQuantity','crewmember','creationDate', 'state'],
+        include:[
+            {
+                model: User,
+                as: "userKayak",
+                where: {
+                    state: parseInt(process.env.Activated)
+                },
+                required: false
+            },
+            {
+                model: kayaktype,
+                as: "typeKayak",
+                where: {
+                    state: parseInt(process.env.Activated)
+                },
+                required: false
+            }
+        ],
         where: {
             id: id,
             state: 1
@@ -33,38 +65,38 @@ export const GetById = (req, res) =>{
 
 export const Post = (req, res) =>{
 
-    const { userId,hangerId, KayaktypeId,nroKayak, img,shovelQuantity,crewmember} = req.body;
-    const tiempoTranscurrido = Date.now();
-    const today = new Date(tiempoTranscurrido);
-    kayak.create({
-        userId: userId,KayaktypeId:KayaktypeId,shovelQuantity:shovelQuantity,
-        hangerId: hangerId,nroKayak:nroKayak,crewmember:crewmember,
-        creationDate: today,img:img,
-        state: 1
-    }).then(p => {          
-        return res.json({
-            status: parseInt(process.env.success_code),
-            title: 'Crear kayak',
-            message:'El kayak fue guardado con exito'
-        });
-    })
-    .catch((err) =>{
+    try {
+        const { userId,accountId, KayaktypeId,nroKayak, img,shovelQuantity,crewmember} = req.body;
+        const tiempoTranscurrido = Date.now();
+        const today = new Date(tiempoTranscurrido);
+
+        kayak.create({
+            id: 0,accountId: accountId,userId: userId,kayakTypeId:KayaktypeId,shovelQuantity:shovelQuantity,
+            nroKayak:nroKayak,crewmember:crewmember,
+            creationDate: today,img:img,
+            state: 1
+        }).then(p => {          
+            return res.json({
+                status: parseInt(process.env.success_code),
+                title: 'Crear kayak',
+                message:'El kayak fue guardado con exito'
+            });
+        })
+    } catch (error) {
         return res.json({
             status:  parseInt(process.env.error_code),
             title: 'Error crear kayak',
-            message:'El kayak no fue guardado ',err
+            message:'El kayak no fue guardado ',error
         });
-    });
-   
+    }   
 }
 export const Put = (req, res) =>{
 
-    const { userId,hangerId, KayaktypeId,nroKayak, img,shovelQuantity,crewmember} = req.body;
+    const { userId,accountId, KayaktypeId,nroKayak, img,shovelQuantity,crewmember} = req.body;
     const { id } = req.params;
     kayak.update({
-        userId: userId,KayaktypeId:KayaktypeId,shovelQuantity:shovelQuantity,
-        hangerId: hangerId,nroKayak:nroKayak,crewmember:crewmember,
-        creationDate: today,img:img,
+        userId: userId,KayakTypeId:KayaktypeId,shovelQuantity:shovelQuantity,
+        accountId: accountId,nroKayak:nroKayak,crewmember:crewmember,img:img,
     }, {
         where: {
             id: id,

@@ -5,12 +5,24 @@ class Location extends Model {}
 Location.init({ 
     id:{
         type: DataTypes.BIGINT,
-        primaryKey: true
+        allowNull:false,
+        autoIncrement: true,
+        unique:true,
+        primaryKey: true,
+    },   
+    accountId:{ 
+        type: DataTypes.BIGINT(11),
+        allowNull: false, 
+        references: {
+          model: 'accounts',
+          key: 'id'
+        }
     },   
     name: DataTypes.STRING, 
     description: DataTypes.STRING,
-    creationDate:DataTypes.DATE,
-    state: DataTypes.INTEGER   
+    creationDate: DataTypes.DATE,
+    finalDate: DataTypes.DATE,
+    state: DataTypes.INTEGER  
 },
 { sequelize, modelName: 'locations' });
 module.exports = Location;

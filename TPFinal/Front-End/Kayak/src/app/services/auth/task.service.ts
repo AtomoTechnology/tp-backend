@@ -80,6 +80,10 @@ export class TaskService {
     return this.loadscript.Decrypt(localStorage.getItem(Constant.roleUser));
   }
 
+  public GetRoleId() {
+    return this.loadscript.Decrypt(localStorage.getItem(Constant.idRole));
+  }
+
   private storeTokens(tokens: Tokens) {
     let decodotken = decode(tokens.token);
     localStorage.setItem(Constant.idUser, this.loadscript.Encrypt(decodotken['iduser']));

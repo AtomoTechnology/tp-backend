@@ -11,12 +11,12 @@ export class ContentprincipalComponent implements OnInit {
 
   menunav:any
   perfil:any;
+  isinitial: boolean = false;
 
   constructor(
     private task: TaskService, private menuservice: MenuserviceService,
     private router: Router) {
-      debugger;
-     }
+    }
 
   ngOnInit(): void {
     
@@ -35,7 +35,6 @@ export class ContentprincipalComponent implements OnInit {
   }
 
   Logout(islogout = false){
-    debugger;
     if(islogout){
       let val = this.task.Logout();
       if(val){

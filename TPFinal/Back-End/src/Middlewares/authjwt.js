@@ -3,7 +3,7 @@ import config from '../config/config';
 require('dotenv').config();
 
 const role = require('../DB/models/role');
-const auth = require('../DB/models/auth');
+const Account = require('../DB/models/account');
 
 export const verifyToken = async (req, res, next) => {
     try {
@@ -21,7 +21,7 @@ export const verifyToken = async (req, res, next) => {
         req.role = decode.role;
         req.idRole = decode.idRole;
         
-        auth.findOne({
+        Account.findOne({
             attributes: ['id', 'userName', 'userId', 'state'],
             where: {
                 state: 1,

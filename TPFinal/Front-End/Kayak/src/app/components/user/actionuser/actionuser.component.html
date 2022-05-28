@@ -1,14 +1,14 @@
 <section id="cover" class="min-vh-100">
     <div id="cover-caption">
         <div class="container">
-            <div class="row text-white">
-                <div class="col-xl-10 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form">
-                    <h1 class="display-4 py-2 text-truncate">{{Option}}</h1>
+            <div class="row">
+                <div class="col-xl-10 col-lg-6 col-md-8 col-sm-10 mx-auto form">
+                    <h1 class="display-4 py-2 text-truncate  text-center">{{Option}}</h1>
                     <div class="px-4">
                         <form action="" class="justify-content-center"  [formGroup]="browserForm" (ngSubmit)="Create()">
                             <div class="form-row">
                               <div class="form-group col-md-6">
-                                <label for="inputfirstName">Nombre</label>
+                                <label for="inputfirstName"  class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="inputfirstName" placeholder="Nombre" name="firstName"
                                 formControlName="firstName"  [class]="isValidField('firstName')">
                                 <div class="invalid-feedback">
@@ -31,13 +31,13 @@
   
                             <div class="form-row">
                               <div class="form-group col-md-6">
-                                <label for="idDocumentType">Tipo de documento</label>
-                                <select  formControlName="idDocumentType"  [class]="isValidField('idDocumentType')" class="form-control" id="idDocumentType">
+                                <label for="documentTypeId">Tipo de documento</label>
+                                <select  formControlName="documentTypeId"  [class]="isValidField('documentTypeId')" class="form-control" id="documentTypeId">
                                   <option value="">Seleccionar el tipo de documento</option>
-                                  <option value="{{doc.id}}" *ngFor ="let doc of doclist"  name="idDocumentType">{{doc.name}}</option>
+                                  <option value="{{doc.id}}" *ngFor ="let doc of doclist"  name="documentTypeId">{{doc.name}}</option>
                                 </select>
                                 <div class="invalid-feedback">
-                                  <span *ngIf="browserForm.get('idDocumentType').errors?.required">
+                                  <span *ngIf="browserForm.get('documentTypeId').errors?.required">
                                       Debe seleccionar el tipo de documento
                                   </span>
                                 </div>
@@ -93,12 +93,12 @@
                               </div>
                               <div class="form-group col-md-6" *ngIf="!OptionBtn">
                                 <label for="inputRole">Acceso</label>
-                                <select  formControlName="idRole"  [class]="isValidField('idRole')" class="form-control" id="inputRole">
+                                <select  formControlName="roleId"  [class]="isValidField('roleId')" class="form-control" id="inputRole">
                                   <option value="">Seleccionar el role</option>
-                                  <option value="{{role.id}}" *ngFor ="let role of rolelist"  name="idRole">{{role.name}}</option>
+                                  <option value="{{role.id}}" *ngFor ="let role of rolelist"  name="roleId">{{role.name}}</option>
                                 </select>
                                 <div class="invalid-feedback">
-                                  <span *ngIf="browserForm.get('idRole').errors?.required">
+                                  <span *ngIf="browserForm.get('roleId').errors?.required">
                                       Debe seleccionar un role
                                   </span>
                                 </div>
